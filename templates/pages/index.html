@@ -1,273 +1,255 @@
 {% extends 'base.html' %}
 {% load static %}
-{% block navbar %}
-{% include 'components/navbar.html' %}
-{% endblock navbar %}R
 
 {% block content %}
-{% if user.is_authenticated %}
-<div x-data="{open:false}" class="px-4 mt-4 shadow rounded-lg  dark:bg-dark-second">
-   <div class="p-2 border-b border-gray-300 dark:border-dark-third flex space-x-4">
+<div x-data="setup()" x-init="$refs.loading.classList.add('hidden');" @resize.window="watchScreen()">
+  <div class="flex h-screen antialiased text-gray-900 bg-gray-100 dark:bg-dark dark:text-light">
+    <!-- Loading screen -->
+    <div x-ref="loading"
+      class="fixed inset-0 z-50 flex items-center justify-center text-2xl font-semibold text-white bg-indigo-800">
+      Loading.....
+    </div>
 
-      <img src="{{user.profile.picture.url}}" alt="Profile picture" class="w-10 h-10 rounded-full">
-      <button @click="open=true"
-         class="transition duration-500 ease-in-out transform hover:-translate-y-1 flex-1 bg-gray-100 rounded-full flex items-center justify-start pl-4 cursor-pointer dark:bg-dark-third text-gray-500 text-lg dark:text-dark-txt">
-         <span>
-            Selling something, {{user.username}}?...
-         </span>
-      </button>
-   </div>
+    {% block sidebarleft %}
+    {% include 'components/sidebar.html' %}
+    {% endblock sidebarleft %}
 
-   <!--POST MODAL-->
-   <div x-show="open" x-transition:enter="ease-out duration-300" x-transition:enter-start="opacity-0"
-      x-transition:enter-end="opacity-100" x-transition:leave="ease-in duration-200"
-      x-transition:leave-start="opacity-100" x-transition:leave-end="opacity-0" @click.away="open = false"
-      class="fixed z-10 inset-0 overflow-y-auto" aria-labelledby="modal-title" role="dialog" aria-modal="true">
-      <div class="flex items-end justify-center min-h-screen pt-4 px-4 pb-20 text-center sm:block sm:p-0">
+    <div class="flex flex-col flex-1">
+      <header class="relative flex items-center justify-between flex-shrink-0 p-4">
+        <form action="#" class="flex-1">
+          <!--  -->
+        </form>
+        <div class="items-center hidden ml-4 sm:flex">
+          <button @click="isSettingsPanelOpen = true"
+            class="p-2 mr-4 text-gray-400 bg-white rounded-lg shadow-md hover:text-gray-600 focus:outline-none focus:ring focus:ring-white focus:ring-offset-gray-100 focus:ring-offset-4">
+            <span class="sr-only">Settings</span>
+            <svg aria-hidden="true" class="w-6 h-6" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
+              stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z" />
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
+            </svg>
+          </button>
 
-         <div x-show="open" x-transition:enter="ease-out duration-300" x-transition:enter-start="opacity-0"
-            x-transition:enter-end="opacity-100" x-transition:leave="ease-in duration-200"
-            x-transition:leave-start="opacity-100" x-transition:leave-end="opacity-0"
-            x-description="Background overlay, show/hide based on modal state."
-            class="fixed inset-0 bg-gray-500 bg-opacity-75 transition-opacity" @click="open = false" aria-hidden="true">
-         </div>
+          <!-- Github link -->
+          <a href="https://github.com/kamona-ui/dashboard-alpine" target="_blank"
+            class="p-2 text-white bg-black rounded-lg shadow-md hover:text-gray-200 focus:outline-none focus:ring focus:ring-black focus:ring-offset-gray-100 focus:ring-offset-2">
+            <span class="sr-only">github link</span>
+            <svg aria-hidden="true" class="w-6 h-6" fill="currentColor" xmlns="http://www.w3.org/2000/svg"
+              viewBox="0 0 24 24">
+              <path fill-rule="evenodd" clip-rule="evenodd"
+                d="M12.026,2c-5.509,0-9.974,4.465-9.974,9.974c0,4.406,2.857,8.145,6.821,9.465 c0.499,0.09,0.679-0.217,0.679-0.481c0-0.237-0.008-0.865-0.011-1.696c-2.775,0.602-3.361-1.338-3.361-1.338 c-0.452-1.152-1.107-1.459-1.107-1.459c-0.905-0.619,0.069-0.605,0.069-0.605c1.002,0.07,1.527,1.028,1.527,1.028 c0.89,1.524,2.336,1.084,2.902,0.829c0.091-0.645,0.351-1.085,0.635-1.334c-2.214-0.251-4.542-1.107-4.542-4.93 c0-1.087,0.389-1.979,1.024-2.675c-0.101-0.253-0.446-1.268,0.099-2.64c0,0,0.837-0.269,2.742,1.021 c0.798-0.221,1.649-0.332,2.496-0.336c0.849,0.004,1.701,0.115,2.496,0.336c1.906-1.291,2.742-1.021,2.742-1.021 c0.545,1.372,0.203,2.387,0.099,2.64c0.64,0.696,1.024,1.587,1.024,2.675c0,3.833-2.33,4.675-4.552,4.922 c0.355,0.308,0.675,0.916,0.675,1.846c0,1.334-0.012,2.41-0.012,2.737c0,0.267,0.178,0.577,0.687,0.479 C19.146,20.115,22,16.379,22,11.974C22,6.465,17.535,2,12.026,2z">
+              </path>
+            </svg>
+          </a>
+        </div>
 
-         <span class="hidden sm:inline-block sm:align-middle sm:h-screen" aria-hidden="true">&#8203;</span>
+        <!-- Mobile sub header button -->
+        <button @click="isSubHeaderOpen = !isSubHeaderOpen"
+          class="p-2 text-gray-400 bg-white rounded-lg shadow-md sm:hidden hover:text-gray-600 focus:outline-none focus:ring focus:ring-white focus:ring-offset-gray-100 focus:ring-offset-4">
+          <span class="sr-only">More</span>
 
+          <svg aria-hidden="true" class="w-6 h-6" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
+            stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+              d="M12 5v.01M12 12v.01M12 19v.01M12 6a1 1 0 110-2 1 1 0 010 2zm0 7a1 1 0 110-2 1 1 0 010 2zm0 7a1 1 0 110-2 1 1 0 010 2z" />
+          </svg>
+        </button>
 
-         <div
-            class="inline-block align-bottom dark:bg-dark-second bg-white rounded-lg px-4 pt-5 pb-4 text-left overflow-hidden shadow-xl transform transition-all sm:my-8 sm:align-middle sm:max-w-sm sm:w-full sm:p-6">
+        <!-- Mobile sub header -->
+        <div x-transition:enter="transform transition-transform" x-transition:enter-start="translate-y-full opacity-0"
+          x-transition:enter-end="translate-y-0 opacity-100" x-transition:leave="transform transition-transform"
+          x-transition:leave-start="translate-y-0 opacity-100" x-transition:leave-end="translate-y-full opacity-0"
+          x-show="isSubHeaderOpen" @click.away="isSubHeaderOpen = false"
+          class="absolute flex items-center justify-between p-2 bg-white rounded-md shadow-lg sm:hidden top-16 left-5 right-5">
+          <!-- Seetings button -->
+          <button @click="isSettingsPanelOpen = true; isSubHeaderOpen = false"
+            class="p-2 text-gray-400 bg-white rounded-lg shadow-md hover:text-gray-600 focus:outline-none focus:ring focus:ring-white focus:ring-offset-gray-100 focus:ring-offset-4">
+            <span class="sr-only">Settings</span>
+            <svg aria-hidden="true" class="w-6 h-6" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
+              stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z" />
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
+            </svg>
+          </button>
+          <!-- Messages button -->
+          <button @click="isSidebarOpen = true; currentSidebarTab = 'messagesTab'; isSubHeaderOpen = false"
+            class="p-2 text-gray-400 bg-white rounded-lg shadow-md hover:text-gray-600 focus:outline-none focus:ring focus:ring-white focus:ring-offset-gray-100 focus:ring-offset-4">
+            <span class="sr-only">Toggle message panel</span>
+            <svg aria-hidden="true" class="w-6 h-6" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
+              stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                d="M8 10h.01M12 10h.01M16 10h.01M9 16H5a2 2 0 01-2-2V6a2 2 0 012-2h14a2 2 0 012 2v8a2 2 0 01-2 2h-5l-5 5v-5z" />
+            </svg>
+          </button>
+          <!-- Notifications button -->
+          <button @click="isSidebarOpen = true; currentSidebarTab = 'notificationsTab'; isSubHeaderOpen = false"
+            class="p-2 text-gray-400 bg-white rounded-lg shadow-md hover:text-gray-600 focus:outline-none focus:ring focus:ring-white focus:ring-offset-gray-100 focus:ring-offset-4">
+            <span class="sr-only">Toggle notifications panel</span>
+            <svg aria-hidden="true" class="w-6 h-6" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
+              stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                d="M15 17h5l-1.405-1.405A2.032 2.032 0 0118 14.158V11a6.002 6.002 0 00-4-5.659V5a2 2 0 10-4 0v.341C7.67 6.165 6 8.388 6 11v3.159c0 .538-.214 1.055-.595 1.436L4 17h5m6 0v1a3 3 0 11-6 0v-1m6 0H9" />
+            </svg>
+          </button>
+          <!-- Github link -->
+          <a href="https://github.com/kamona-ui/dashboard-alpine" target="_blank"
+            class="p-2 text-white bg-black rounded-lg shadow-md hover:text-gray-200 focus:outline-none focus:ring focus:ring-black focus:ring-offset-gray-100 focus:ring-offset-2">
+            <span class="sr-only">github link</span>
+            <svg aria-hidden="true" class="w-6 h-6" fill="currentColor" xmlns="http://www.w3.org/2000/svg"
+              viewBox="0 0 24 24">
+              <path fill-rule="evenodd" clip-rule="evenodd"
+                d="M12.026,2c-5.509,0-9.974,4.465-9.974,9.974c0,4.406,2.857,8.145,6.821,9.465 c0.499,0.09,0.679-0.217,0.679-0.481c0-0.237-0.008-0.865-0.011-1.696c-2.775,0.602-3.361-1.338-3.361-1.338 c-0.452-1.152-1.107-1.459-1.107-1.459c-0.905-0.619,0.069-0.605,0.069-0.605c1.002,0.07,1.527,1.028,1.527,1.028 c0.89,1.524,2.336,1.084,2.902,0.829c0.091-0.645,0.351-1.085,0.635-1.334c-2.214-0.251-4.542-1.107-4.542-4.93 c0-1.087,0.389-1.979,1.024-2.675c-0.101-0.253-0.446-1.268,0.099-2.64c0,0,0.837-0.269,2.742,1.021 c0.798-0.221,1.649-0.332,2.496-0.336c0.849,0.004,1.701,0.115,2.496,0.336c1.906-1.291,2.742-1.021,2.742-1.021 c0.545,1.372,0.203,2.387,0.099,2.64c0.64,0.696,1.024,1.587,1.024,2.675c0,3.833-2.33,4.675-4.552,4.922 c0.355,0.308,0.675,0.916,0.675,1.846c0,1.334-0.012,2.41-0.012,2.737c0,0.267,0.178,0.577,0.687,0.479 C19.146,20.115,22,16.379,22,11.974C22,6.465,17.535,2,12.026,2z">
+              </path>
+            </svg>
+          </a>
+        </div>
+      </header>
 
-            <div>
-               <div
-                  class="mx-auto flex items-center justify-center h-12 w-12 rounded-full dark:bg-dark-third bg-gray-100">
-                  <span class="font-semibold text-lg text-gray-500"><i class='bx bx-store-alt'></i>
-               </div>
-               <div class="mt-3 text-center sm:mt-5">
-                  <h3 class="text-lg leading-6 font-medium dark:text-dark-txt text-gray-900" id="modal-title">
-                     Sell a product
-                  </h3>
-                  <div class="mt-2">
-                     <p class="text-sm dark:text-dark-txt text-gray-500">
-                        What would you like to sell today?
-                     </p>
-                     <p class="text-sm font-semibold dark:text-dark-txt text-gray-500">
-                        Music, Games, Videos, Files, URLs
-                     </p>
-                  </div>
-               </div>
-            </div>
+      <div class="md:absolute md:left-40 md:top-20">
+        <!-- Main -->
+        <main class="flex items-center justify-center flex-1 px-4 py-8">
 
-            <div class="relative">
-               <div class="absolute inset-0 flex items-center" aria-hidden="true">
-                  <div class="w-full border-t dark:border-dark-second border-gray-300"></div>
-               </div>
-               <div class="relative flex justify-center my-4">
-                  <span class="px-2 bg-white dark:bg-dark-second text-sm dark:text-dark-txt text-gray-500">
-                     Product Thumbnail Image
-                  </span>
-               </div>
-            </div>
-
-
-            <form class="form-horizontal dark:text-dark-txt" method="POST"  enctype="multipart/form-data">
-                {% csrf_token %}
-
-                <div class="mt-1 sm:mt-0 sm:col-span-2">
-                    <div class="max-w-lg flex justify-center px-6 pt-5 pb-6 border-2 dark:border-dark-third border-gray-300 border-dashed rounded-md">
-                        {{form.thumbnail}}
-                        <div class="space-y-1 text-center">
-                            <div class="flex text-sm text-gray-600">
-                            
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- This example requires Tailwind CSS v2.0+ -->
-                <div class="relative">
+          <section class="text-gray-600 body-font ">
+            <div class="container px-5 mx-auto">
+              <div class="relative">
                 <div class="absolute inset-0 flex items-center" aria-hidden="true">
-                    <div class="w-full border-t dark:border-dark-second border-gray-300"></div>
+                  <div class="w-full border-t dark:border-dark-second border-gray-300"></div>
                 </div>
                 <div class="relative flex justify-center my-4">
-                    <span class="px-2 bg-white dark:bg-dark-second text-sm dark:text-dark-txt text-gray-500">
-                    Product Details
-                    </span>
-                </div>
-                </div>
-
-                <label for="photo" class="block text-sm font-medium dark:text-dark-txt text-gray-700">
-                Name
-                </label>
-                {{form.name}}
-
-                <label for="photo" class="block text-sm font-medium dark:text-dark-txt text-gray-700">
-                Description
-                </label>
-                {{form.description}}
-
-                <label for="photo" class="block text-sm font-medium dark:text-dark-txt text-gray-700">
-                Category
-                </label>
-                {{form.category}}
-
-                <label for="photo" class=" block text-sm font-medium dark:text-dark-txt text-gray-700">
-                Price, 100 = $1,00 | 1,000 = $10 | 10,000 = $100
-                </label>
-                {{form.price}}
-
-                <label for="photo" class="block text-sm font-medium dark:text-dark-txt text-gray-700">
-                Slug
-                </label>
-                <div class="mt-1 flex rounded-md shadow-sm">
-                <span class="inline-flex items-center px-3 rounded-l-md border border-r-0 dark:border-dark-second dark:bg-dark-second border-gray-300 bg-gray-50 dark:text-dark-txt text-gray-500 sm:text-sm">
-                    https://vudera.com/p/
-                </span>
-                {{form.slug}}
-                </div>
-
-                {{form.errors}}
-
-                <div class="relative">
-                <div class="absolute inset-0 flex items-center" aria-hidden="true">
-                    <div class="w-full border-t dark:border-dark-second border-gray-300"></div>
-                </div>
-                <div class="relative flex justify-center">
-                    <span class="px-2 my-4 bg-white dark:bg-dark-second text-sm dark:text-dark-txt text-gray-500">
-                    What are you selling?
-                    </span>
-                </div>
-                </div>
-
-                
-
-
-                <label for="photo" class="block text-sm font-medium dark:text-dark-txt text-gray-700">
-                URL (Optional: paid url products)
-                </label>
-                
-                {{form.content_url}}
-                
-
-                <label for="photo" class="block text-sm font-medium dark:text-dark-txt text-gray-700">
-                Upload Content
-                </label>
-                <div class="mt-1 sm:mt-0 sm:col-span-2">
-
-                <div class="max-w-lg flex justify-center px-6 pt-5 pb-6 border-2 dark:border-dark-third border-gray-300 border-dashed rounded-md">
-                {{form.content_file}}
-                <div class="space-y-1 text-center">
-                    <div class="flex text-sm text-gray-600">
-                    
-                    </div>
-                </div>
-                </div>
-
-            </div>
-
-                <label for="photo" class="block text-sm font-medium dark:text-dark-txt text-gray-700">
-                Publish or Draft?
-                </label>
-                {{form.active}}
-
-                <span class=" text-red-500">{{form.errors}}</span>
-
-
-                <div class="control-group">
-                <div class="controls">
-                    <div @click="open=false" class="cursor-pointer mt-4 inline-flex float-left items-center px-2.5 py-1.5 border border-transparent text-xs font-medium rounded dark:text-dark-txt text-indigo-700 dark:bg-dark-third bg-indigo-100 dark:hover:bg-dark-third hover:bg-indigo-200 focus:outline-none focus:ring-2 focus:ring-offset-2 dark:focus:ring-dark-third focus:ring-indigo-500">
-                    Return</div>
-                    <button type="submit" class="mt-4 inline-flex float-right items-center px-2.5 py-1.5 border border-transparent text-xs font-medium rounded dark:text-dark-txt text-indigo-700 dark:bg-dark-third bg-indigo-100 dark:hover:bg-dark-third hover:bg-indigo-200 focus:outline-none focus:ring-2 focus:ring-offset-2 dark:focus:ring-dark-third focus:ring-indigo-500">
-                    Create</button>
-                </div>
-                </div>
-
-
-            </form>
-
-
-         </div>
-
-
-      </div>
-   </div>
-   <!-- END POST MODAL -->
-
-   <div class="p-2 flex">
-      <a href=" {% url 'product-list' %}"
-         class="w-1/3 flex space-x-2 justify-center items-center hover:bg-gray-100 dark:hover:bg-dark-third text-xl sm:text-3xl py-2 rounded-lg cursor-pointer text-blue-500">
-         <i class='bx bx-store'></i>
-         <span class="text-xs sm:text-sm font-semibold text-gray-500 dark:text-dark-txt">Store</span>
-      </a>
-      {% comment %} <a href="{% url 'product-create' %}"
-         class="w-1/3 flex space-x-2 justify-center items-center hover:bg-gray-100 dark:hover:bg-dark-third text-xl sm:text-3xl py-2 rounded-lg cursor-pointer text-green-500">
-         <i class='bx bxs-plus-circle'></i>
-         <span class="text-xs sm:text-sm font-semibold text-gray-500 dark:text-dark-txt">Create a Product</span>
-      </a> {% endcomment %}
-      <a href="#"
-         class="w-1/3 flex space-x-2 justify-center items-center hover:bg-gray-100 dark:hover:bg-dark-third text-xl sm:text-3xl py-2 rounded-lg cursor-pointer text-yellow-500">
-         <i class='bx bx-library'></i>
-         <span class="text-xs sm:text-sm font-semibold text-gray-500 dark:text-dark-txt">Library</span>
-      </a>
-   </div>
-</div>
-{% endif %}
-<!-- This example requires Tailwind CSS v2.0+ -->
-<div class="relative bg-gray-50 pt-16 pb-20 px-4 sm:px-6 lg:pt-24 lg:pb-28 lg:px-8">
-   <div class="absolute inset-0">
-      <div class="bg-white h-1/3 sm:h-2/3"></div>
-   </div>
-   <div class="relative max-w-7xl mx-auto">
-      <div class="text-center">
-         <h2 class="text-3xl tracking-tight font-extrabold text-gray-900 sm:text-4xl">
-            Lista de Productos
-         </h2>
-         <p class="mt-3 max-w-2xl mx-auto text-xl text-gray-500 sm:mt-4">
-            Productos digitales para comprar y vender
-         </p>
-      </div>
-
-
-         <div class="grid gap-8 lg:grid-cols-3 sm:max-w-sm sm:mx-auto lg:max-w-full">
-            
-        {% for product in products %}
-            <div class="overflow-hidden transition-shadow duration-300 bg-white rounded shadow-sm">
-              <a href="{% url 'product-detail' product.slug %}"><img src="{{product.thumbnail.url}}" class="object-cover w-full h-64"
-                  alt="{{post.title}}" /></a>
-              <div class="p-5 border border-t-0">
-                <p class="mb-3 text-xs font-semibold tracking-wide uppercase">
-        
-                  <span class="text-gray-600 flex justify-start items-center"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" style="fill: rgba(75, 85, 99, 1);transform: ;msFilter:;"><path d="M7 11h2v2H7zm0 4h2v2H7zm4-4h2v2h-2zm0 4h2v2h-2zm4-4h2v2h-2zm0 4h2v2h-2z"></path><path d="M5 22h14c1.103 0 2-.897 2-2V6c0-1.103-.897-2-2-2h-2V2h-2v2H9V2H7v2H5c-1.103 0-2 .897-2 2v14c0 1.103.897 2 2 2zM19 8l.001 12H5V8h14z"></path></svg> {{post.create_on}}</span>
-                </p>
-                <a href="" aria-label="Category" title="Visit the East"
-                  class="inline-block mb-3 text-2xl font-bold leading-5 transition-colors duration-200 hover:text-deep-purple-accent-700"> {{product.name}}</a>
-                <p class="mb-2 text-gray-700">
-                  {{product.description|truncatechars:50}}
-                </p>
-                <p class="mb-2 text-gray-700">
-                  ${{product.price_display}}
-                </p>
-                <div class="flex items-center">
-                  <a href="" aria-label="Author" title="Author"
-                    class="mr-3">
-                    <img src=" {{post.author.profile.pinture.url}}" alt="{{post.author}}"
-                      class="object-cover w-10 h-10 rounded-full shadow-sm" />
-                  </a>
-                  <div>
-                    <a href="" aria-label="Author" title="Author"
-                      class="font-semibold text-gray-800 transition-colors duration-200 hover:text-deep-purple-accent-400 capitalize">{{post.author}}</a>
-                    <p class="text-sm font-medium leading-4 text-gray-600">Autor</p>
-                  </div>
+                  <span class="px-2 bg-white dark:bg-dark-second text-sm dark:text-dark-txt text-gray-500">
+                    Adquiere o vende libros digitales!
+                  </span>
                 </div>
               </div>
+              <div class="flex flex-wrap -m-4">
+                {% for product in products %}
+                <div class="lg:w-1/3 md:w-1/2 p-4 w-full">
+                  <div class="flex max-w-md bg-white shadow-lg rounded-lg overflow-hidden">
+                    <div class="w-2/5 bg-cover bg-landscape">
+                      <a href="{% url 'product-detail' product.slug %}" class="focus-visible:outline-none">
+                        <img src="{{product.thumbnail.url}}" alt="{{product.name}}" class=" w-full h-full block">
+                      </a>
+                    </div>
+                    <div class="w-3/5 p-4">
+                      <a href="{% url 'product-detail' product.slug %}"
+                        class="focus-visible:outline-none text-gray-900 font-bold text-2xl">
+                        {{product.name}}
+                      </a>
+                      <p class="mt-2 text-gray-600 text-sm">
+                        {{product.description|truncatechars:50}}
+                      </p>
+                      <div class="flex item-center mt-2">
+                        <svg class="w-5 h-5 fill-current text-gray-700" viewBox="0 0 24 24">
+                          <path
+                            d="M12 17.27L18.18 21L16.54 13.97L22 9.24L14.81 8.63L12 2L9.19 8.63L2 9.24L7.46 13.97L5.82 21L12 17.27Z">
+                          </path>
+                        </svg>
+                        <svg class="w-5 h-5 fill-current text-gray-700" viewBox="0 0 24 24">
+                          <path
+                            d="M12 17.27L18.18 21L16.54 13.97L22 9.24L14.81 8.63L12 2L9.19 8.63L2 9.24L7.46 13.97L5.82 21L12 17.27Z">
+                          </path>
+                        </svg>
+                        <svg class="w-5 h-5 fill-current text-gray-700" viewBox="0 0 24 24">
+                          <path
+                            d="M12 17.27L18.18 21L16.54 13.97L22 9.24L14.81 8.63L12 2L9.19 8.63L2 9.24L7.46 13.97L5.82 21L12 17.27Z">
+                          </path>
+                        </svg>
+                        <svg class="w-5 h-5 fill-current text-gray-500" viewBox="0 0 24 24">
+                          <path
+                            d="M12 17.27L18.18 21L16.54 13.97L22 9.24L14.81 8.63L12 2L9.19 8.63L2 9.24L7.46 13.97L5.82 21L12 17.27Z">
+                          </path>
+                        </svg>
+                        <svg class="w-5 h-5 fill-current text-gray-500" viewBox="0 0 24 24">
+                          <path
+                            d="M12 17.27L18.18 21L16.54 13.97L22 9.24L14.81 8.63L12 2L9.19 8.63L2 9.24L7.46 13.97L5.82 21L12 17.27Z">
+                          </path>
+                        </svg>
+                      </div>
+                      <div class="flex item-center justify-between mt-3">
+                        <h1 class="text-gray-700 font-bold text-xl">
+                          ${{product.price_display}}
+                        </h1>
+                        <a href="{% url 'product-detail' product.slug %}"
+                          class="focus-visible:outline-none px-3 py-2 bg-yellow-400 text-white  text-xs font-bold uppercase rounded">
+                          Ver Libro
+                        </a>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                {% endfor %}
+
+              </div>
             </div>
-            {% endfor %}
-          </div>
+          </section>
+          <!-- Content -->
+        </main>
+      </div>
+    </div>
+  </div>
 
-   </div>
+  <!-- Panels -->
+
+  <!-- Settings Panel -->
+  <!-- Backdrop -->
+  <div x-show="isSettingsPanelOpen" class="fixed inset-0 bg-black bg-opacity-50" @click="isSettingsPanelOpen = false"
+    aria-hidden="true"></div>
+  <!-- Panel -->
+  <section x-transition:enter="transform transition-transform duration-300" x-transition:enter-start="translate-x-full"
+    x-transition:enter-end="translate-x-0" x-transition:leave="transform transition-transform duration-300"
+    x-transition:leave-start="translate-x-0" x-transition:leave-end="translate-x-full" x-show="isSettingsPanelOpen"
+    class="fixed inset-y-0 right-0 w-64 bg-white border-l border-indigo-100 rounded-l-3xl">
+    <div class="px-4 py-8">
+      <h2 class="text-lg font-semibold">Settings</h2>
+    </div>
+  </section>
+
+
+
+  <!-- Author links -->
+  <div class="fixed flex items-center space-x-4 bottom-20 right-5 sm:bottom-5">
+    <a href="https://twitter.com/ak_kamona" target="_blank" class="transition-transform transform hover:scale-125">
+      <span class="sr-only">Twitter</span>
+      <svg aria-hidden="true" class="w-8 h-8 text-blue-500" fill="currentColor" xmlns="http://www.w3.org/2000/svg"
+        viewBox="0 0 24 24">
+        <path
+          d="M19.633,7.997c0.013,0.175,0.013,0.349,0.013,0.523c0,5.325-4.053,11.461-11.46,11.461c-2.282,0-4.402-0.661-6.186-1.809 c0.324,0.037,0.636,0.05,0.973,0.05c1.883,0,3.616-0.636,5.001-1.721c-1.771-0.037-3.255-1.197-3.767-2.793 c0.249,0.037,0.499,0.062,0.761,0.062c0.361,0,0.724-0.05,1.061-0.137c-1.847-0.374-3.23-1.995-3.23-3.953v-0.05 c0.537,0.299,1.16,0.486,1.82,0.511C3.534,9.419,2.823,8.184,2.823,6.787c0-0.748,0.199-1.434,0.548-2.032 c1.983,2.443,4.964,4.04,8.306,4.215c-0.062-0.3-0.1-0.611-0.1-0.923c0-2.22,1.796-4.028,4.028-4.028 c1.16,0,2.207,0.486,2.943,1.272c0.91-0.175,1.782-0.512,2.556-0.973c-0.299,0.935-0.936,1.721-1.771,2.22 c0.811-0.088,1.597-0.312,2.319-0.624C21.104,6.712,20.419,7.423,19.633,7.997z">
+        </path>
+      </svg>
+    </a>
+    <a href="https://github.com/Kamona-WD" target="_blank" class="transition-transform transform hover:scale-125">
+      <span class="sr-only">Github</span>
+      <svg aria-hidden="true" class="w-8 h-8 text-black" fill="currentColor" xmlns="http://www.w3.org/2000/svg"
+        viewBox="0 0 24 24">
+        <path fill-rule="evenodd" clip-rule="evenodd"
+          d="M12.026,2c-5.509,0-9.974,4.465-9.974,9.974c0,4.406,2.857,8.145,6.821,9.465 c0.499,0.09,0.679-0.217,0.679-0.481c0-0.237-0.008-0.865-0.011-1.696c-2.775,0.602-3.361-1.338-3.361-1.338 c-0.452-1.152-1.107-1.459-1.107-1.459c-0.905-0.619,0.069-0.605,0.069-0.605c1.002,0.07,1.527,1.028,1.527,1.028 c0.89,1.524,2.336,1.084,2.902,0.829c0.091-0.645,0.351-1.085,0.635-1.334c-2.214-0.251-4.542-1.107-4.542-4.93 c0-1.087,0.389-1.979,1.024-2.675c-0.101-0.253-0.446-1.268,0.099-2.64c0,0,0.837-0.269,2.742,1.021 c0.798-0.221,1.649-0.332,2.496-0.336c0.849,0.004,1.701,0.115,2.496,0.336c1.906-1.291,2.742-1.021,2.742-1.021 c0.545,1.372,0.203,2.387,0.099,2.64c0.64,0.696,1.024,1.587,1.024,2.675c0,3.833-2.33,4.675-4.552,4.922 c0.355,0.308,0.675,0.916,0.675,1.846c0,1.334-0.012,2.41-0.012,2.737c0,0.267,0.178,0.577,0.687,0.479 C19.146,20.115,22,16.379,22,11.974C22,6.465,17.535,2,12.026,2z">
+        </path>
+      </svg>
+    </a>
+  </div>
 </div>
-{% endblock content %}
 
+<script>
+  const setup = () => {
+    return {
+      isSidebarOpen: false,
+      currentSidebarTab: null,
+      isSettingsPanelOpen: false,
+      isSubHeaderOpen: false,
+      watchScreen() {
+        if (window.innerWidth <= 1024) {
+          this.isSidebarOpen = false
+        }
+      },
+    }
+  }
+</script>
+{% endblock content %}
 {% block footer %}{% endblock footer %}
 
 {% block javascript %}{% endblock javascript %}
