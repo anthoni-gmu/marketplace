@@ -21,6 +21,13 @@
     {% block content %}
   {% block sidebarleft %}
     {% endblock sidebarleft %}
+
+<main class="flex items-center justify-center flex-1 px-4 py-8">
+{% block main %}{% endblock main %}
+</main>
+
+     {% block sidebarright %}
+    {% endblock sidebarright %}
     {% endblock content %}
 
     {% block footer %}{% endblock footer %}

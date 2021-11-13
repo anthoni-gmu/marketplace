@@ -11,7 +11,7 @@
     </div>
 
     {% block sidebarleft %}
-    {% include 'components/sidebar.html' %}
+    {% include 'components/sidebarleft.html' %}
     {% endblock sidebarleft %}
 
     <div class="flex flex-col flex-1">
@@ -33,7 +33,7 @@
           </button>
 
           <!-- Github link -->
-          <a href="https://github.com/kamona-ui/dashboard-alpine" target="_blank"
+          <a href="https://github.com/anthoni-gmu/marketplace" target="_blank"
             class="p-2 text-white bg-black rounded-lg shadow-md hover:text-gray-200 focus:outline-none focus:ring focus:ring-black focus:ring-offset-gray-100 focus:ring-offset-2">
             <span class="sr-only">github link</span>
             <svg aria-hidden="true" class="w-6 h-6" fill="currentColor" xmlns="http://www.w3.org/2000/svg"
@@ -109,86 +109,108 @@
         </div>
       </header>
 
-      <div class="md:absolute md:left-40 md:top-20">
+      <div class="md:absolute md:left-40 md:top-10">
         <!-- Main -->
-        <main class="flex items-center justify-center flex-1 px-4 py-8">
-
-          <section class="text-gray-600 body-font ">
-            <div class="container px-5 mx-auto">
-              <div class="relative">
-                <div class="absolute inset-0 flex items-center" aria-hidden="true">
-                  <div class="w-full border-t dark:border-dark-second border-gray-300"></div>
-                </div>
-                <div class="relative flex justify-center my-4">
-                  <span class="px-2 bg-white dark:bg-dark-second text-sm dark:text-dark-txt text-gray-500">
-                    Adquiere o vende libros digitales!
-                  </span>
-                </div>
+        {% block main %}
+        <section class="text-gray-600 body-font ">
+          <div class="container px-5 mx-auto">
+            <div class="relative">
+              <div class="absolute inset-0 flex items-center" aria-hidden="true">
+                <div class="w-full border-t dark:border-dark-second border-gray-300"></div>
               </div>
-              <div class="flex flex-wrap -m-4">
-                {% for product in products %}
-                <div class="lg:w-1/3 md:w-1/2 p-4 w-full">
-                  <div class="flex max-w-md bg-white shadow-lg rounded-lg overflow-hidden">
-                    <div class="w-2/5 bg-cover bg-landscape">
-                      <a href="{% url 'product-detail' product.slug %}" class="focus-visible:outline-none">
-                        <img src="{{product.thumbnail.url}}" alt="{{product.name}}" class=" w-full h-full block">
-                      </a>
+              <div class="relative flex justify-center my-4">
+                <span class="px-2 bg-white dark:bg-dark-second text-sm dark:text-dark-txt text-gray-500">
+                  Adquiere o vende libros digitales!
+                </span>
+              </div>
+            </div>
+            <div class="flex flex-wrap -m-4">
+              {% for product in products %}
+              <div class="lg:w-1/3 md:w-1/2 p-4 w-full">
+                <div class="flex max-w-md bg-white shadow-lg rounded-lg overflow-hidden">
+                  <div class="w-2/5 bg-cover bg-landscape">
+                    <a href="{% url 'product-detail' product.slug %}" class="focus-visible:outline-none">
+                      <img src="{{product.thumbnail.url}}" alt="{{product.name}}" class=" w-full h-full block">
+                    </a>
+                  </div>
+                  <div class="w-3/5 p-4">
+                    <a href="{% url 'product-detail' product.slug %}"
+                      class="focus-visible:outline-none text-gray-900 font-bold text-2xl">
+                      {{product.name}}
+                    </a>
+
+
+
+                    <p class="mt-2 text-gray-600 text-sm">
+                      {{product.description|truncatechars:50}}
+                    </p>
+
+
+                    <div class="flex item-center mt-2">
+                      {% if product.get_prom_rate %}
+
+                      {% for start in product.get_prom_rate %}
+                      <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24"
+                        style="fill: rgb(63, 62, 62);transform: ;msFilter:;">
+                        <path
+                          d="M21.947 9.179a1.001 1.001 0 0 0-.868-.676l-5.701-.453-2.467-5.461a.998.998 0 0 0-1.822-.001L8.622 8.05l-5.701.453a1 1 0 0 0-.619 1.713l4.213 4.107-1.49 6.452a1 1 0 0 0 1.53 1.057L12 18.202l5.445 3.63a1.001 1.001 0 0 0 1.517-1.106l-1.829-6.4 4.536-4.082c.297-.268.406-.686.278-1.065z">
+                        </path>
+                      </svg>
+                      {% endfor %}
+
+                      {% for start in product.get_missing_start %}
+                      <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24"
+                        style="fill: rgb(63, 62, 62);transform: ;msFilter:;">
+                        <path
+                          d="m6.516 14.323-1.49 6.452a.998.998 0 0 0 1.529 1.057L12 18.202l5.445 3.63a1.001 1.001 0 0 0 1.517-1.106l-1.829-6.4 4.536-4.082a1 1 0 0 0-.59-1.74l-5.701-.454-2.467-5.461a.998.998 0 0 0-1.822 0L8.622 8.05l-5.701.453a1 1 0 0 0-.619 1.713l4.214 4.107zm2.853-4.326a.998.998 0 0 0 .832-.586L12 5.43l1.799 3.981a.998.998 0 0 0 .832.586l3.972.315-3.271 2.944c-.284.256-.397.65-.293 1.018l1.253 4.385-3.736-2.491a.995.995 0 0 0-1.109 0l-3.904 2.603 1.05-4.546a1 1 0 0 0-.276-.94l-3.038-2.962 4.09-.326z">
+                        </path>
+                      </svg>
+                      {% endfor %}
+                      <div class="px-6 flex items-center justify-center">
+
+                        <span class="text-lg">{{product.get_reviws_count}}</span>
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
+                          style="fill: rgb(63, 62, 62);transform: ;msFilter:;">
+                          <path
+                            d="M16 14h.5c.827 0 1.5-.673 1.5-1.5v-9c0-.827-.673-1.5-1.5-1.5h-13C2.673 2 2 2.673 2 3.5V18l5.333-4H16zm-9.333-2L4 14V4h12v8H6.667z">
+                          </path>
+                          <path
+                            d="M20.5 8H20v6.001c0 1.1-.893 1.993-1.99 1.999H8v.5c0 .827.673 1.5 1.5 1.5h7.167L22 22V9.5c0-.827-.673-1.5-1.5-1.5z">
+                          </path>
+                        </svg>
+
+
+                      </div>
+
+                      {% else %}
+                      <span class="px-4 py-2  text-base rounded-full text-yellow-600  bg-yellow-200 ">
+                        0 reviews
+                      </span>
+                      {% endif %}
+
+
+
                     </div>
-                    <div class="w-3/5 p-4">
+                    <div class="flex item-center justify-between mt-3">
+                      <h1 class="text-gray-700 font-bold text-xl">
+                        ${{product.price_display}}
+                      </h1>
                       <a href="{% url 'product-detail' product.slug %}"
-                        class="focus-visible:outline-none text-gray-900 font-bold text-2xl">
-                        {{product.name}}
+                        class="focus-visible:outline-none px-3 py-2 bg-yellow-400 text-white  text-xs font-bold uppercase rounded">
+                        Ver Libro
                       </a>
-                      <p class="mt-2 text-gray-600 text-sm">
-                        {{product.description|truncatechars:50}}
-                      </p>
-                      <div class="flex item-center mt-2">
-                        <svg class="w-5 h-5 fill-current text-gray-700" viewBox="0 0 24 24">
-                          <path
-                            d="M12 17.27L18.18 21L16.54 13.97L22 9.24L14.81 8.63L12 2L9.19 8.63L2 9.24L7.46 13.97L5.82 21L12 17.27Z">
-                          </path>
-                        </svg>
-                        <svg class="w-5 h-5 fill-current text-gray-700" viewBox="0 0 24 24">
-                          <path
-                            d="M12 17.27L18.18 21L16.54 13.97L22 9.24L14.81 8.63L12 2L9.19 8.63L2 9.24L7.46 13.97L5.82 21L12 17.27Z">
-                          </path>
-                        </svg>
-                        <svg class="w-5 h-5 fill-current text-gray-700" viewBox="0 0 24 24">
-                          <path
-                            d="M12 17.27L18.18 21L16.54 13.97L22 9.24L14.81 8.63L12 2L9.19 8.63L2 9.24L7.46 13.97L5.82 21L12 17.27Z">
-                          </path>
-                        </svg>
-                        <svg class="w-5 h-5 fill-current text-gray-500" viewBox="0 0 24 24">
-                          <path
-                            d="M12 17.27L18.18 21L16.54 13.97L22 9.24L14.81 8.63L12 2L9.19 8.63L2 9.24L7.46 13.97L5.82 21L12 17.27Z">
-                          </path>
-                        </svg>
-                        <svg class="w-5 h-5 fill-current text-gray-500" viewBox="0 0 24 24">
-                          <path
-                            d="M12 17.27L18.18 21L16.54 13.97L22 9.24L14.81 8.63L12 2L9.19 8.63L2 9.24L7.46 13.97L5.82 21L12 17.27Z">
-                          </path>
-                        </svg>
-                      </div>
-                      <div class="flex item-center justify-between mt-3">
-                        <h1 class="text-gray-700 font-bold text-xl">
-                          ${{product.price_display}}
-                        </h1>
-                        <a href="{% url 'product-detail' product.slug %}"
-                          class="focus-visible:outline-none px-3 py-2 bg-yellow-400 text-white  text-xs font-bold uppercase rounded">
-                          Ver Libro
-                        </a>
-                      </div>
                     </div>
                   </div>
                 </div>
-
-                {% endfor %}
-
               </div>
+
+              {% endfor %}
+
             </div>
-          </section>
-          <!-- Content -->
-        </main>
+          </div>
+        </section>
+        {% endblock main %}
+
       </div>
     </div>
   </div>
@@ -197,43 +219,17 @@
 
   <!-- Settings Panel -->
   <!-- Backdrop -->
-  <div x-show="isSettingsPanelOpen" class="fixed inset-0 bg-black bg-opacity-50" @click="isSettingsPanelOpen = false"
-    aria-hidden="true"></div>
-  <!-- Panel -->
-  <section x-transition:enter="transform transition-transform duration-300" x-transition:enter-start="translate-x-full"
-    x-transition:enter-end="translate-x-0" x-transition:leave="transform transition-transform duration-300"
-    x-transition:leave-start="translate-x-0" x-transition:leave-end="translate-x-full" x-show="isSettingsPanelOpen"
-    class="fixed inset-y-0 right-0 w-64 bg-white border-l border-indigo-100 rounded-l-3xl">
-    <div class="px-4 py-8">
-      <h2 class="text-lg font-semibold">Settings</h2>
-    </div>
-  </section>
+  {% block sidebarright %}
+  {% include 'components/sidebarright.html' %}
+
+  {% endblock sidebarright %}
+
 
 
 
   <!-- Author links -->
-  <div class="fixed flex items-center space-x-4 bottom-20 right-5 sm:bottom-5">
-    <a href="https://twitter.com/ak_kamona" target="_blank" class="transition-transform transform hover:scale-125">
-      <span class="sr-only">Twitter</span>
-      <svg aria-hidden="true" class="w-8 h-8 text-blue-500" fill="currentColor" xmlns="http://www.w3.org/2000/svg"
-        viewBox="0 0 24 24">
-        <path
-          d="M19.633,7.997c0.013,0.175,0.013,0.349,0.013,0.523c0,5.325-4.053,11.461-11.46,11.461c-2.282,0-4.402-0.661-6.186-1.809 c0.324,0.037,0.636,0.05,0.973,0.05c1.883,0,3.616-0.636,5.001-1.721c-1.771-0.037-3.255-1.197-3.767-2.793 c0.249,0.037,0.499,0.062,0.761,0.062c0.361,0,0.724-0.05,1.061-0.137c-1.847-0.374-3.23-1.995-3.23-3.953v-0.05 c0.537,0.299,1.16,0.486,1.82,0.511C3.534,9.419,2.823,8.184,2.823,6.787c0-0.748,0.199-1.434,0.548-2.032 c1.983,2.443,4.964,4.04,8.306,4.215c-0.062-0.3-0.1-0.611-0.1-0.923c0-2.22,1.796-4.028,4.028-4.028 c1.16,0,2.207,0.486,2.943,1.272c0.91-0.175,1.782-0.512,2.556-0.973c-0.299,0.935-0.936,1.721-1.771,2.22 c0.811-0.088,1.597-0.312,2.319-0.624C21.104,6.712,20.419,7.423,19.633,7.997z">
-        </path>
-      </svg>
-    </a>
-    <a href="https://github.com/Kamona-WD" target="_blank" class="transition-transform transform hover:scale-125">
-      <span class="sr-only">Github</span>
-      <svg aria-hidden="true" class="w-8 h-8 text-black" fill="currentColor" xmlns="http://www.w3.org/2000/svg"
-        viewBox="0 0 24 24">
-        <path fill-rule="evenodd" clip-rule="evenodd"
-          d="M12.026,2c-5.509,0-9.974,4.465-9.974,9.974c0,4.406,2.857,8.145,6.821,9.465 c0.499,0.09,0.679-0.217,0.679-0.481c0-0.237-0.008-0.865-0.011-1.696c-2.775,0.602-3.361-1.338-3.361-1.338 c-0.452-1.152-1.107-1.459-1.107-1.459c-0.905-0.619,0.069-0.605,0.069-0.605c1.002,0.07,1.527,1.028,1.527,1.028 c0.89,1.524,2.336,1.084,2.902,0.829c0.091-0.645,0.351-1.085,0.635-1.334c-2.214-0.251-4.542-1.107-4.542-4.93 c0-1.087,0.389-1.979,1.024-2.675c-0.101-0.253-0.446-1.268,0.099-2.64c0,0,0.837-0.269,2.742,1.021 c0.798-0.221,1.649-0.332,2.496-0.336c0.849,0.004,1.701,0.115,2.496,0.336c1.906-1.291,2.742-1.021,2.742-1.021 c0.545,1.372,0.203,2.387,0.099,2.64c0.64,0.696,1.024,1.587,1.024,2.675c0,3.833-2.33,4.675-4.552,4.922 c0.355,0.308,0.675,0.916,0.675,1.846c0,1.334-0.012,2.41-0.012,2.737c0,0.267,0.178,0.577,0.687,0.479 C19.146,20.115,22,16.379,22,11.974C22,6.465,17.535,2,12.026,2z">
-        </path>
-      </svg>
-    </a>
-  </div>
-</div>
 
+</div>
 <script>
   const setup = () => {
     return {
