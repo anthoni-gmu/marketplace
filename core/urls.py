@@ -4,7 +4,7 @@ from django.urls import path
 from django.conf.urls.static import static
 from django.conf import settings
 from django.urls.conf import include
-from .views import HomeView,UserProductList,ProductUpdateView,ProdutDetailView,CreateCheckoutSessionView,SuccesVies,stripe_webhook
+from .views import HomeView,UserProductList,ProductUpdateView,ProdutDetailView,CreateCheckoutSessionView,SuccesVies,stripe_webhook,UserLibraryView
 
 urlpatterns = [
     path('admin/', admin.site.urls),
@@ -12,6 +12,7 @@ urlpatterns = [
     path('users/', include('accounts.urls',namespace="users")),
     path('marketplace/', include('marketplace.urls', namespace="marketplace")),
     path('',HomeView.as_view(),name="home"),
+    path('library/<username>/',UserLibraryView.as_view(),name="library"),
     path('product/',UserProductList.as_view(),name="product-list"),
     path('product/<slug>/update',ProductUpdateView.as_view(),name="product-update"),
     path('product/<slug>/detail',ProdutDetailView.as_view(),name="product-detail"),

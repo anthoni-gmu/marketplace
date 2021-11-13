@@ -17,7 +17,7 @@ from django.core.mail import send_mail
 
 from django.contrib.auth import get_user_model
 User = get_user_model()
-
+from accounts.models import UserLibraty
 stripe.api_key = settings.STRIPE_SECRET_KEY
 
 
@@ -79,12 +79,23 @@ class HomeView(View):
 class UserProductList(View):
     def get(self, request, *args, **kwargs):
         products = Product.objects.filter(user=request.user)
+        
+        
 
         context = {
             'products': products
         }
         return render(request, 'pages/products/user_productlist.html', context)
 
+class UserLibraryView(LoginRequiredMixin,View):
+    def get(self, request,username, *args, **kwargs):
+        user=get_object_or_404(User,username=username)
+        userlibrary=UserLibraty.objects.get(user=user)
+        context={
+            'userlibrary':userlibrary
+        }
+        
+        return render(request, 'pages/products/library.html', context)
 
 class ProductUpdateView(LoginRequiredMixin, UpdateView):
     template_name = 'pages/products/edit.html'
@@ -100,12 +111,19 @@ class ProductUpdateView(LoginRequiredMixin, UpdateView):
 class ProdutDetailView(View):
     def get(self, request, slug, *args, **kwargs):
         product = get_object_or_404(Product, slug=slug)
+        has_access = None
+        if self.request.user.is_authenticated:
+            if product in self.request.user.library.products.all():
+                has_access=True
+        
         context = {
             'product': product,
 
         }
         context.update({
-            'STRIPE_PUBLIC_KEY': settings.STRIPE_PUBLIC_KEY
+            'STRIPE_PUBLIC_KEY': settings.STRIPE_PUBLIC_KEY,
+            'has_access': has_access
+            
         })
         return render(request, 'pages/products/detail.html', context)
 

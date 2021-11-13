@@ -12,26 +12,33 @@ def marketplace_directory_path(instance,filname):
         os.remove(full_path)
     return banner_pic_name
 
+
+class Categories(models.Model):
+    name=models.CharField(max_length=100)
+    def __str__(self):
+        return self.name
+    
 class Product(models.Model):
     user=models.ForeignKey(User, on_delete=models.CASCADE,related_name='products')
     name=models.CharField(max_length=100)
     description=models.TextField()
     thumbnail=models.ImageField(blank=True,null=True,upload_to=marketplace_directory_path)
     slug=models.SlugField(unique=True)
-    
     content_url=models.URLField(blank=True,null=True)
     content_file=models.FileField(blank=True,null=True)
-     # content_file = models.FileField(blank=True, null=True, validators=[FileExtensionValidator(allowed_extensions=['mp3'])])
+    ##content_file = models.FileField(blank=True, null=True, validators=[FileExtensionValidator(allowed_extensions=['mp3'])])
     active=models.BooleanField(default=False)
     
     price=models.PositiveIntegerField(default=100)
-    
+    category = models.ManyToManyField(Categories)
     def __str__(self):
         return self.name
     
     def price_display(self):
         return "{0:.2f}".format(self.price/100)
-    
+
+
+   
 class PurchasedProduct(models.Model):
     email=models.EmailField()
     product=models.ForeignKey(Product,on_delete=models.CASCADE)
