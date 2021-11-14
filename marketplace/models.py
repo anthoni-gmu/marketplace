@@ -36,7 +36,7 @@ class Product(models.Model):
 
     price = models.PositiveIntegerField(default=100)
     category = models.ManyToManyField(Categories)
-
+    created = models.DateTimeField(auto_now_add=True)
     def __str__(self):
         return self.name
 

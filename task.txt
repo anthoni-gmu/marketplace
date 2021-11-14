@@ -1,0 +1,11 @@
+1.HomePage
+    -/Nav - {Categorias-Informacion}  --> Create
+    -/Search - 'future'
+    -/Pagination - {previus-next-page_actual} --> Function
+    -/CategoryView - {url to categorries} --> Create
+    -/ProfileDetail - {Edit} --> Function and Create
+
+2.Mis Publicaciones
+    -/UpdateAllPage - {Detail table}
+3.Mi biblioteca 
+    -/UpdateAllPage - {Detail table}
