@@ -17,9 +17,10 @@
 <body>
 
 <div x-data="{ cartOpen: false , isOpen: false }" class="bg-white">
+ {% block sidebarcategory %}{% endblock sidebarcategory %}
     {% block content %}
-
     {% block navbar %}{% endblock navbar %}
+
 
     {% endblock content %}
 

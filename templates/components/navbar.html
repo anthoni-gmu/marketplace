@@ -38,7 +38,6 @@
                         <img src="{{user.photo.url}}" alt="" class="w-full h-full object-cover ">
                     </div>
         </button>
-
         <div class="flex sm:hidden">
           <button @click="isOpen = !isOpen" type="button"
             class="text-gray-600 hover:text-gray-500 focus:outline-none focus:text-gray-500" aria-label="toggle menu">
@@ -53,8 +52,8 @@
     </div>
     <nav :class="isOpen ? '' : 'hidden'" class="sm:flex sm:justify-center sm:items-center mt-4">
       <div class="flex flex-col sm:flex-row">
-        <a class="mt-3 text-gray-600 hover:underline sm:mx-3 sm:mt-0" href="#">Mercado</a>
-        <a class="mt-3 text-gray-600 hover:underline sm:mx-3 sm:mt-0" href="#">Categorias</a>
+        <a class="mt-3 text-gray-600 hover:underline sm:mx-3 sm:mt-0" href=" {% url 'home' %}">Mercado</a>
+        <a class="mt-3 text-gray-600 hover:underline sm:mx-3 sm:mt-0" href="{% url 'marketplace:category' %} ">Categorias</a>
         <a class="mt-3 text-gray-600 hover:underline sm:mx-3 sm:mt-0" href="#">Informacion</a>
       </div>
     </nav>
@@ -66,7 +65,6 @@
             stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
         </svg>
       </span>
-  
       <input
         class="w-full border rounded-md pl-10 pr-4 py-2 focus:border-blue-500 focus:outline-none focus:shadow-outline"
         type="text" placeholder="Buscar Libro">
@@ -79,7 +77,6 @@
             <i class='bx bx-store'></i>
             <span class="text-xs sm:text-sm font-semibold text-gray-500 dark:text-dark-txt">Mis Publicaciones</span>
         </a>
-      
         <a href="{% url 'library' user.username %}" class="w-1/2 flex space-x-2 justify-center items-center hover:bg-gray-100 dark:hover:bg-dark-third text-xl sm:text-3xl py-2 rounded-lg cursor-pointer text-yellow-500">
             <i class='bx bx-library'></i>
             <span class="text-xs sm:text-sm font-semibold text-gray-500 dark:text-dark-txt">Mi Librería</span>
