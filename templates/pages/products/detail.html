@@ -89,13 +89,17 @@
   </div>
 </section>
 
-
+{% csrf_token %}
   <!-- Author links -->
 {% endblock content %}
   
 {% block footer %}
 {% include 'components/footer.html' %}
 {% endblock footer %}
+
+
+{% block javascript %}
+
 <script>
   
    const csrftoken = document.querySelector('[name=csrfmiddlewaretoken]').value;
@@ -133,5 +137,4 @@
         });
     });
 </script>
-
-{% block javascript %}{% endblock javascript %}
+{% endblock javascript %}

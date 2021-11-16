@@ -19,13 +19,17 @@ VERIFICATION_OPTIONS=(
 )
 
 class User(AbstractUser):
-    stripe_customer_id=models.CharField(max_length=50)
+    stripe_customer_id=models.CharField(max_length=50,null=True, blank=True)
     photo=models.ImageField(default='users/user_default_bg.png',upload_to=user_directory_path_profile)
     created=models.DateTimeField(auto_now_add=True)
     verifield=models.CharField(max_length=10,choices=VERIFICATION_OPTIONS,default='unverified')
     coins  =models.DecimalField(max_digits=19,decimal_places=2,default=0,blank=False)  
     date_created =models.DateField(auto_now_add=True)
+    def get_produsts_count(self):
+        return self.library.products.all().count()
     
+    def get_produsts_count_public(self):
+        return self.products.all().count()
     
 class UserPayment(models.Model):
     street = models.CharField(max_length=100,null=False)
@@ -46,6 +50,8 @@ class UserLibraty(models.Model):
     products=models.ManyToManyField(Product, blank=True)
     def __str__(self):
         return self.user.email
+    
+    
     
 
 def post_save_user_receiver(sender,instance,created,**kwargs):

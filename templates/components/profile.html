@@ -1,0 +1,126 @@
+{% load static %}
+
+<div x-data="{ cartOpen: false , isOpen: false }" class="bg-white">
+    {% block navbar %}
+    {% include 'components/navbar.html' %}
+    {% endblock navbar %}
+
+    <div :class="cartOpen ? 'translate-x-0 ease-out' : 'translate-x-full ease-in'"
+        class="fixed right-0 top-0 max-w-sm w-full h-full px-6 py-4 transition duration-300 transform overflow-y-auto bg-white border-l-2 border-gray-300">
+        <div class="flex items-center justify-between">
+            <h3 class="text-2xl font-medium text-gray-700 ">Mi cuenta</h3>
+            <button @click="cartOpen = !cartOpen" class="text-gray-600 focus:outline-none">
+                <svg class="h-5 w-5" fill="none" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                    viewBox="0 0 24 24" stroke="currentColor">
+                    <path d="M6 18L18 6M6 6l12 12"></path>
+                </svg>
+            </button>
+        </div>
+        <hr class="my-3">
+        <div class=" w-80 p-4 bg-white dark:bg-gray-800">
+            <div class="flex flex-row items-start gap-4">
+                <img src="{{user.photo.url}}" class="w-28 h-28 rounded-lg" />
+                <div class="h-28 w-full flex flex-col justify-between">
+                    <div>
+                        <p class="text-gray-800 dark:text-white capitalize text-xl font-medium">
+                            {{user.username}}
+                        </p>
+                    </div>
+                    <button type="button" class="py-2 px-4  bg-yellow-600 hover:bg-yellow-700 focus:ring-indigo-500 focus:ring-offset-indigo-200 text-white w-full transition ease-in duration-200 text-center text-base font-semibold shadow-md focus:outline-none focus:ring-2 focus:ring-offset-2  rounded-lg ">
+                    Editar perfil
+                </button>
+                </div>
+            </div>
+            <div class=" bg-yellow-100 dark:bg-gray-800 my-3 rounded-xl">
+                <div class="flex items-center">
+                    <span class="rounded-xl relative flex bg-yellow-200 p-3">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" style="fill: rgb(0, 0, 0);transform: ;msFilter:;"><path d="M12 6C7.03 6 2 7.546 2 10.5v4C2 17.454 7.03 19 12 19s10-1.546 10-4.5v-4C22 7.546 16.97 6 12 6zm-8 8.5v-1.197a9.989 9.989 0 0 0 2 .86v1.881c-1.312-.514-2-1.126-2-1.544zm12 .148v1.971c-.867.179-1.867.31-3 .358v-2a21.75 21.75 0 0 0 3-.329zm-5 2.33a18.788 18.788 0 0 1-3-.358v-1.971c.959.174 1.972.287 3 .33v1.999zm7-.934v-1.881a9.931 9.931 0 0 0 2-.86V14.5c0 .418-.687 1.03-2 1.544zM12 13c-5.177 0-8-1.651-8-2.5S6.823 8 12 8s8 1.651 8 2.5-2.823 2.5-8 2.5z"></path></svg>
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" style="fill: rgba(0, 0, 0, 1);transform: ;msFilter:;"><path d="M20 17V7c0-2.168-3.663-4-8-4S4 4.832 4 7v10c0 2.168 3.663 4 8 4s8-1.832 8-4zM12 5c3.691 0 5.931 1.507 6 1.994C17.931 7.493 15.691 9 12 9S6.069 7.493 6 7.006C6.069 6.507 8.309 5 12 5zM6 9.607C7.479 10.454 9.637 11 12 11s4.521-.546 6-1.393v2.387c-.069.499-2.309 2.006-6 2.006s-5.931-1.507-6-2V9.607zM6 17v-2.393C7.479 15.454 9.637 16 12 16s4.521-.546 6-1.393v2.387c-.069.499-2.309 2.006-6 2.006s-5.931-1.507-6-2z"></path></svg>
+                        <p class="text-md text-black font-bold dark:text-white ml-2">
+                            ToniCoin
+                        </p>
+                    </span>
+                    <p class="text-gray-700 mx-2 text-4xl flex font-bold my-4">
+                        {{user.coins}}
+                    </p>
+                </div>
+              
+            </div>
+            <div class="shadow-lg rounded-xl w-full md:w-80 p-4 bg-white dark:bg-gray-800 relative overflow-hidden">
+                <div class="w-full flex items-center justify-between mb-6">
+                    <p class="text-gray-800 dark:text-white text-xl font-medium">
+                        Libros
+                    </p>
+                    <button
+                        class="flex items-center hover:text-black dark:text-gray-50 dark:hover:text-white text-gray-800 border-0 focus:outline-none">
+                        <svg width="20" height="20" fill="currentColor" viewBox="0 0 1792 1792"
+                            xmlns="http://www.w3.org/2000/svg">
+                            <path
+                                d="M1600 736v192q0 40-28 68t-68 28h-416v416q0 40-28 68t-68 28h-192q-40 0-68-28t-28-68v-416h-416q-40 0-68-28t-28-68v-192q0-40 28-68t68-28h416v-416q0-40 28-68t68-28h192q40 0 68 28t28 68v416h416q40 0 68 28t28 68z">
+                            </path>
+                        </svg>
+                    </button>
+                </div>
+                <div class="flex items-center mb-2 rounded justify-between p-3 bg-green-100">
+                    <span class="rounded-lg p-2 bg-white">
+                        <svg width="20" height="20" fill="currentColor" viewBox="0 0 1792 1792"
+                            xmlns="http://www.w3.org/2000/svg">
+                            <path
+                                d="M1520 1216q0-40-28-68l-208-208q-28-28-68-28-42 0-72 32 3 3 19 18.5t21.5 21.5 15 19 13 25.5 3.5 27.5q0 40-28 68t-68 28q-15 0-27.5-3.5t-25.5-13-19-15-21.5-21.5-18.5-19q-33 31-33 73 0 40 28 68l206 207q27 27 68 27 40 0 68-26l147-146q28-28 28-67zm-703-705q0-40-28-68l-206-207q-28-28-68-28-39 0-68 27l-147 146q-28 28-28 67 0 40 28 68l208 208q27 27 68 27 42 0 72-31-3-3-19-18.5t-21.5-21.5-15-19-13-25.5-3.5-27.5q0-40 28-68t68-28q15 0 27.5 3.5t25.5 13 19 15 21.5 21.5 18.5 19q33-31 33-73zm895 705q0 120-85 203l-147 146q-83 83-203 83-121 0-204-85l-206-207q-83-83-83-203 0-123 88-209l-88-88q-86 88-208 88-120 0-204-84l-208-208q-84-84-84-204t85-203l147-146q83-83 203-83 121 0 204 85l206 207q83 83 83 203 0 123-88 209l88 88q86-88 208-88 120 0 204 84l208 208q84 84 84 204z">
+                            </path>
+                        </svg>
+                    </span>
+                    <div class="flex w-full ml-2 items-center justify-between">
+                        <p>
+                            Publicados
+                        </p>
+                        <p>
+                            {{user.get_produsts_count_public}}
+                        </p>
+                    </div>
+                </div>
+                <div class="flex items-center mb-2 rounded justify-between p-3 bg-purple-100">
+                    <span class="rounded-lg p-2 bg-white">
+                        <svg width="20" height="20" fill="currentColor" viewBox="0 0 1792 1792"
+                            xmlns="http://www.w3.org/2000/svg">
+                            <path
+                                d="M1596 380q28 28 48 76t20 88v1152q0 40-28 68t-68 28h-1344q-40 0-68-28t-28-68v-1600q0-40 28-68t68-28h896q40 0 88 20t76 48zm-444-244v376h376q-10-29-22-41l-313-313q-12-12-41-22zm384 1528v-1024h-416q-40 0-68-28t-28-68v-416h-768v1536h1280zm-128-448v320h-1024v-192l192-192 128 128 384-384zm-832-192q-80 0-136-56t-56-136 56-136 136-56 136 56 56 136-56 136-136 56z">
+                            </path>
+                        </svg>
+                    </span>
+                    <div class="flex w-full ml-2 items-center justify-between">
+                        <p>
+                            Compados
+                        </p>
+                        <p>
+                           {{user.get_produsts_count}}
+                        </p>
+                    </div>
+                </div>
+                <div class="flex items-center mb-2 rounded justify-between p-3 bg-yellow-100">
+                    <span class="rounded-lg p-2 bg-white">
+                        <svg width="20" height="20" fill="currentColor" viewBox="0 0 1792 1792"
+                            xmlns="http://www.w3.org/2000/svg">
+                            <path
+                                d="M960 256q0-26-19-45t-45-19-45 19-19 45 19 45 45 19 45-19 19-45zm832 928v352q0 22-20 30-8 2-12 2-12 0-23-9l-93-93q-119 143-318.5 226.5t-429.5 83.5-429.5-83.5-318.5-226.5l-93 93q-9 9-23 9-4 0-12-2-20-8-20-30v-352q0-14 9-23t23-9h352q22 0 30 20 8 19-7 35l-100 100q67 91 189.5 153.5t271.5 82.5v-647h-192q-26 0-45-19t-19-45v-128q0-26 19-45t45-19h192v-163q-58-34-93-92.5t-35-128.5q0-106 75-181t181-75 181 75 75 181q0 70-35 128.5t-93 92.5v163h192q26 0 45 19t19 45v128q0 26-19 45t-45 19h-192v647q149-20 271.5-82.5t189.5-153.5l-100-100q-15-16-7-35 8-20 30-20h352q14 0 23 9t9 23z">
+                            </path>
+                        </svg>
+                    </span>
+                    <div class="flex w-full ml-2 items-center justify-between">
+                        <p>
+                            Copias Vendidas
+                        </p>
+                        <p>
+                            22.07
+                        </p>
+                    </div>
+                </div>
+             <button type="button" class="py-2 mt-32 px-4  bg-red-600 hover:bg-red-700 focus:ring-indigo-500 focus:ring-offset-indigo-200 text-white w-full transition ease-in duration-200 text-center text-base font-semibold shadow-md focus:outline-none focus:ring-2 focus:ring-offset-2  rounded-lg ">
+                    Cerrar Sesión
+                </button>
+             
+
+        </div>
+     
+    </div>
+</div>
