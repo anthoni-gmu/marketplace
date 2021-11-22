@@ -6,7 +6,7 @@
 
 <header>
   <div class="container mx-auto px-6 py-3">
-    <div class="flex items-center justify-between">
+    <div class="flex  items-center justify-between">
       <div class="hidden w-full text-gray-600 md:flex md:items-center">
         <svg class="h-5 w-5" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
           <path fill-rule="evenodd" clip-rule="evenodd"
@@ -18,26 +18,34 @@
         </svg>
         <span class="mx-1 text-sm">PERÚ</span>
       </div>
-      <div class="w-full">
-       {% if user.is_authenticated %}
-        <a href="{% url 'home' %} "class="flex justify-center">
+      <div class="w-full flex justify-center">
+        <a href="{% url 'home' %} " class="flex justify-center">
           <img class="md:h-14 w-auto h-10 l" src="{% static 'images/logo.png' %}" alt="">
         </a>
-          {% else %}
-        <a href="{% url 'account_login' %}" class="text-base font-medium text-gray-500 hover:text-gray-900">
-          Sign in
-        </a>
-        <a href="{% url 'account_signup' %}" class="ml-8 inline-flex items-center justify-center px-4 py-2 border border-transparent rounded-md shadow-sm text-base font-medium text-white bg-indigo-600 hover:bg-indigo-700">
-          Sign up
-        </a>
-        {% endif %}
       </div>
+
       <div class="flex items-center justify-end w-full">
+        {% if user.is_authenticated %}
+
         <button @click="cartOpen = !cartOpen" class="text-gray-600 focus:outline-none mx-4 sm:mx-0">
           <div class="w-9 h-9 rounded-full overflow-hidden ">
-                        <img src="{{user.photo.url}}" alt="" class="w-full h-full object-cover ">
-                    </div>
+            <img src="{{user.photo.url}}" alt="" class="w-full h-full object-cover ">
+          </div>
         </button>
+        {% else %}
+      
+        <div class="lg:flex items-center justify-end gap-4 hidden   mt-8 w-full">
+          <a href="{% url 'account_login' %}" 
+            class="py-2 px-4 flex  bg-yellow-600 hover:bg-yellow-700 focus:ring-yellow-500 focus:ring-offset-yellow-200 text-white transition ease-in duration-200 text-center text-base font-semibold shadow-md focus:outline-none focus:ring-2 focus:ring-offset-2  rounded-lg ">
+            Ingresar
+          </a>
+          <a href="{% url 'account_signup' %}"
+            class="py-2 px-4  bg-white hover:bg-gray-100 focus:ring-yellow-500 focus:ring-offset-yellow-200  transition ease-in duration-200 text-center text-base font-semibold shadow-md focus:outline-none focus:ring-2 focus:ring-offset-2  rounded-lg ">
+            Registrarse
+          </a>
+        </div>
+        {% endif %}
+
         <div class="flex sm:hidden">
           <button @click="isOpen = !isOpen" type="button"
             class="text-gray-600 hover:text-gray-500 focus:outline-none focus:text-gray-500" aria-label="toggle menu">
@@ -49,13 +57,30 @@
           </button>
         </div>
       </div>
+
     </div>
     <nav :class="isOpen ? '' : 'hidden'" class="sm:flex sm:justify-center sm:items-center mt-4">
       <div class="flex flex-col sm:flex-row">
         <a class="mt-3 text-gray-600 hover:underline sm:mx-3 sm:mt-0" href=" {% url 'home' %}">Mercado</a>
-        <a class="mt-3 text-gray-600 hover:underline sm:mx-3 sm:mt-0" href="{% url 'marketplace:category' %} ">Categorias</a>
+        <a class="mt-3 text-gray-600 hover:underline sm:mx-3 sm:mt-0"
+          href="{% url 'marketplace:category' %} ">Categorias</a>
         <a class="mt-3 text-gray-600 hover:underline sm:mx-3 sm:mt-0" href="#">Informacion</a>
       </div>
+      {% if not user.is_authenticated %}
+      <div class="lg:hidden flex items-center justify-end gap-4  mt-8 w-full">
+        <a href="{% url 'account_login' %}"
+          class="py-2 px-4 flex  bg-yellow-600 hover:bg-yellow-700 focus:ring-yellow-500 focus:ring-offset-yellow-200 text-white transition ease-in duration-200 text-center text-base font-semibold shadow-md focus:outline-none focus:ring-2 focus:ring-offset-2  rounded-lg ">
+          Ingresar
+      </a>
+        <a href="{% url 'account_signup' %}"
+          class="py-2 px-4  bg-white hover:bg-gray-100 focus:ring-yellow-500 focus:ring-offset-yellow-200  transition ease-in duration-200 text-center text-base font-semibold shadow-md focus:outline-none focus:ring-2 focus:ring-offset-2  rounded-lg ">
+          Registrarse
+    </a>
+
+     
+      </div>
+      {% endif %}
+
     </nav>
     <div class="relative mt-6 max-w-lg mx-auto">
       <span class="absolute inset-y-0 left-0 pl-3 flex items-center">
@@ -71,15 +96,17 @@
     </div>
   </div>
 </header>
-       {% if user.is_authenticated %}
- <div class=" flex container mx-auto px-6">
-        <a href="{% url 'product-list' %}" class="w-1/2 flex space-x-2 justify-center items-center hover:bg-gray-100 dark:hover:bg-dark-third text-xl sm:text-3xl py-2 rounded-lg cursor-pointer text-blue-500">
-            <i class='bx bx-store'></i>
-            <span class="text-xs sm:text-sm font-semibold text-gray-500 dark:text-dark-txt">Mis Publicaciones</span>
-        </a>
-        <a href="{% url 'library' user.username %}" class="w-1/2 flex space-x-2 justify-center items-center hover:bg-gray-100 dark:hover:bg-dark-third text-xl sm:text-3xl py-2 rounded-lg cursor-pointer text-yellow-500">
-            <i class='bx bx-library'></i>
-            <span class="text-xs sm:text-sm font-semibold text-gray-500 dark:text-dark-txt">Mi Librería</span>
-        </a>
-    </div>
+{% if user.is_authenticated %}
+<div class=" flex container mx-auto px-6">
+  <a href="{% url 'product-list' %}"
+    class="w-1/2 flex space-x-2 justify-center items-center hover:bg-gray-100 dark:hover:bg-dark-third text-xl sm:text-3xl py-2 rounded-lg cursor-pointer text-blue-500">
+    <i class='bx bx-store'></i>
+    <span class="text-xs sm:text-sm font-semibold text-gray-500 dark:text-dark-txt">Mis Publicaciones</span>
+  </a>
+  <a href="{% url 'library' user.username %}"
+    class="w-1/2 flex space-x-2 justify-center items-center hover:bg-gray-100 dark:hover:bg-dark-third text-xl sm:text-3xl py-2 rounded-lg cursor-pointer text-yellow-500">
+    <i class='bx bx-library'></i>
+    <span class="text-xs sm:text-sm font-semibold text-gray-500 dark:text-dark-txt">Mi Librería</span>
+  </a>
+</div>
 {% endif %}

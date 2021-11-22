@@ -1,0 +1,67 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+
+{% block profile %}
+{% include 'components/profile.html'%}
+{% endblock profile %}
+<div class="container mx-auto">
+    <form class="flex justify-center px-6 my-12" method="post" enctype="multipart/form-data">
+        {% csrf_token %}
+
+        <!-- Row -->
+        <div class="w-full xl:w-3/4 lg:w-11/12 flex">
+            <!-- Col -->
+            <div class="w-full h-auto bg-gray-400 hidden lg:block lg:w-5/12 bg-cover rounded-l-lg"
+                style="background-image: url('{{user.photo.url}}')" alt="{{profile.user.username}}"></div>
+            <!-- Col -->
+            <div class="w-full lg:w-7/12 bg-white p-5 rounded-lg lg:rounded-l-none">
+                <h3 class="pt-4 text-2xl text-center">Editar Perfil</h3>
+                <form class="px-8 pt-6 pb-8 mb-4 bg-white rounded">
+                    <div class="mb-4 md:flex md:justify-between">
+                        <div class="mb-4 md:mr-2 md:mb-0">
+                            <label class="block mb-2 text-sm font-bold text-gray-700" for="firstName">
+                                Nombre
+                            </label>
+                            {{form.first_name}}
+                        </div>
+                        <div class="md:ml-2">
+                            <label class="block mb-2 text-sm font-bold text-gray-700" for="lastName">
+                                Apellido
+                            </label>
+                            {{form.last_name}}
+                        </div>
+                    </div>
+                    
+                    <div class="mb-4 md:flex md:justify-between">
+                        <div class="mb-4 md:mr-2 md:mb-0">
+                            <label class="block mb-2 text-sm font-bold text-gray-700">
+                                Foto
+                            </label>
+                            {{form.photo}}
+
+                        </div>
+                        
+                    </div>
+
+                    <div class="">
+                        <a href="{% url 'home'%}"
+                            class="mt-4 inline-flex items-center px-2.5 py-1.5 border border-transparent text-lg font-medium rounded text-yellow-700 dark:bg-dark-second bg-yellow-100 dark:hover:bg-dark-third hover:bg-yellow-200 focus:outline-none focus:ring-2 focus:ring-offset-2  focus:ring-yellow-500">
+                            Regresar al perfil </a>
+                        <button type="submit"
+                            class="mt-4 inline-flex float-right items-center px-2.5 py-1.5 border border-transparent text-lg font-medium rounded text-yellow-700 dark:bg-dark-third bg-yellow-100 dark:hover:bg-dark-third hover:bg-yellow-200 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-yellow-500">
+                            Actualizar</button>
+                    </div>
+
+                </form>
+            </div>
+        </div>
+    </form>
+</div>
+{% endblock content %}
+{% block footer %}
+{% include 'components/footer.html' %}
+{% endblock footer %}
+
+{% block javascript %}{% endblock javascript %}
