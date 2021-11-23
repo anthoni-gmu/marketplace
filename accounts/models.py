@@ -32,10 +32,6 @@ class User(AbstractUser):
         return self.products.all().count()
     
 class UserPayment(models.Model):
-    street = models.CharField(max_length=100,null=False)
-    city=models.CharField(max_length=30,null=False)
-    country=models.CharField(max_length=30,null=False)
-    czip=models.IntegerField(null=False)
     card=models.IntegerField(null=False)
     expired=models.DateField(auto_now_add=False,null=False)
     csv_filename= models.IntegerField(null=False)

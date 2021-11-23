@@ -1,8 +1,9 @@
 from django.shortcuts import render
 from .models import User
 from django.contrib.auth.decorators import login_required
-from .forms import EditProfileForm
+from .forms import EditProfileForm,AddPaymentForm
 from django.shortcuts import render, get_object_or_404, redirect
+from django.views.generic.base import View
 @login_required
 def EditProfile(request):
     user =request.user.id 
@@ -25,3 +26,10 @@ def EditProfile(request):
     }
     return render(request, 'pages/users/edit.html', context)
     
+class AddPaymentView(View):
+    def get(self, request, *args, **kwargs):
+        form=AddPaymentForm()
+        context = {
+            'form':form,
+        }
+        return render(request, 'pages/users/add_payment.html', context)
