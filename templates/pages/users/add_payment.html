@@ -98,90 +98,55 @@
         </header>
         <main class="mt-4 p-4">
           <h1 class="text-xl font-semibold text-gray-700 text-center">Metodo de pago</h1>
-          <div class="">
+
+
+          <form method="post" class="">
+          {% csrf_token %}
             <div class="my-3">
-              <input
-                type="text"
-                class="block w-full px-5 py-2 border rounded-lg bg-white shadow-lg placeholder-gray-400 text-gray-700 focus:ring focus:outline-none"
-                placeholder="Nombre en la tarjeta"
-                maxlength="22"
-                x-model="cardholder"
-              />
-            </div>
+              
+             {{form.owner_of_card}}
             <div class="my-3">
-              <input
-                type="text"
-                class="block w-full px-5 py-2 border rounded-lg bg-white shadow-lg placeholder-gray-400 text-gray-700 focus:ring focus:outline-none"
-                placeholder="Número de tarjeta"
-                x-model="cardNumber"
-                x-on:keydown="format()"
-                x-on:keyup="isValid()"
-                maxlength="19"
-              />
+            {{form.card}}
+
             </div>
             <div class="my-3 flex flex-col">
               <div class="mb-2">
                 <label for="" class="text-gray-700">Fecha</label>
               </div>
               <div class="grid grid-cols-2 sm:grid-cols-4 gap-2">
-                <select
-                  name=""
-                  id=""
-                  class="form-select appearance-none block w-full px-5 py-2 border rounded-lg bg-white shadow-lg placeholder-gray-400 text-gray-700 focus:ring focus:outline-none"
-                  x-model="expired.month"
-                >
-                  <option value="" selected disabled>Mes</option>
-                  <option value="01">01</option>
-                  <option value="02">02</option>
-                  <option value="03">03</option>
-                  <option value="04">04</option>
-                  <option value="05">05</option>
-                  <option value="06">06</option>
-                  <option value="07">07</option>
-                  <option value="08">08</option>
-                  <option value="09">09</option>
-                  <option value="10">10</option>
-                  <option value="11">11</option>
-                  <option value="12">12</option>
-                </select>
-                <select
-                  name=""
-                  id=""
-                  class="form-select appearance-none block w-full px-5 py-2 border rounded-lg bg-white shadow-lg placeholder-gray-400 text-gray-700 focus:ring focus:outline-none"
-                  x-model="expired.year"
-                >
-                  <option value="" selected disabled>Año</option>
-                  <option value="2021">2021</option>
-                  <option value="2022">2022</option>
-                  <option value="2023">2023</option>
-                  <option value="2024">2024</option>
-                  <option value="2025">2025</option>
-                  <option value="2026">2026</option>
-                  <option value="2026">2027</option>
+                
+               {{form.dateMM}}
+               {{form.dateAA}}
 
-                </select>
-                <input
-                  type="text"
-                  class="block w-full col-span-2 px-5 py-2 border rounded-lg bg-white shadow-lg placeholder-gray-400 text-gray-700 focus:ring focus:outline-none"
-                  placeholder="CVC"
-                  maxlength="3"
-                  x-model="securityCode"
-                  x-on:focus="card = 'back'"
-                  x-on:blur="card = 'front'"
-                />
+                 {{form.csv_filename}}
+                  
               </div>
             </div>
-          </div>
-        </main>
-        <footer class="mt-6 p-4">
-          <button
-            class="submit-button px-4 py-3 rounded-full bg-yellow-300 text-yellow-900 focus:ring focus:outline-none w-full text-xl font-semibold transition-colors"
+            <button
+            type="submit"
+            class="submit-button mt-6 px-4 py-3 rounded-full bg-yellow-300 text-yellow-900 focus:ring focus:outline-none w-full text-xl font-semibold transition-colors"
             x-bind:disabled="!isValid"
             x-on:click="onSubmit()"
           >
             Agregar tarjeta
           </button>
-        </footer>
+          </form>
+          {% if form.errors %}
+    {% for field in form %}
+        {% for error in field.errors %}
+            <div class="alert alert-danger">
+                <strong>{{ error|escape }}</strong>
+            </div>
+        {% endfor %}
+    {% endfor %}
+    {% for error in form.non_field_errors %}
+        <div class="alert alert-danger">
+            <strong>{{ error|escape }}</strong>
+        </div>
+    {% endfor %}
+{% endif %}
+        </main>
+       
       </div>
     </div>
     

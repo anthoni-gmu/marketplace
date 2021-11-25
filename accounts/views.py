@@ -1,5 +1,5 @@
 from django.shortcuts import render
-from .models import User
+from .models import User,UserPayment
 from django.contrib.auth.decorators import login_required
 from .forms import EditProfileForm,AddPaymentForm
 from django.shortcuts import render, get_object_or_404, redirect
@@ -29,7 +29,28 @@ def EditProfile(request):
 class AddPaymentView(View):
     def get(self, request, *args, **kwargs):
         form=AddPaymentForm()
+        
         context = {
             'form':form,
         }
         return render(request, 'pages/users/add_payment.html', context)
+    
+    def post(self,request, *args, **kwargs):
+        user=request.user.id 
+        payment=UserPayment.DoesNotExist()
+        form=AddPaymentForm(request.POST)
+        
+        if form.is_valid():
+            print("ecoooooooss")
+            
+            new_comment=form.save(commit=False)
+            new_comment.user=request.user
+            new_comment.save() 
+            
+        else:
+            print(form.non_field_errors)
+        context={
+            'form':form,
+        }
+        
+        return render(request,'pages/users/add_payment.html',context)

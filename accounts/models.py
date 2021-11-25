@@ -17,7 +17,31 @@ VERIFICATION_OPTIONS=(
     ('unverified','unverified'),
     ('verified','verified'),
 )
+MM_OPTIONS = (
+    ('1', '1'),
+    ('2', '2'),
+    ('3', '3'),
+    ('4', '4'),
+    ('5', '5'),
+    ('6', '6'),
+    ('7', '7'),
+    ('8', '8'),
+    ('9', '9'),
+    ('10', '10'),
+    ('11', '11'),
+    ('12', '12'),
+)
 
+AA_OPTIONS = (
+    ('2021', '2221'),
+    ('2222', '2222'),
+    ('2223', '2223'),
+    ('2224', '2224'),
+    ('2225', '2225'),
+    ('2226', '2226'),
+    ('2227', '2227'),
+    ('2228', '2228'),
+)
 class User(AbstractUser):
     stripe_customer_id=models.CharField(max_length=50,null=True, blank=True)
     photo=models.ImageField(default='users/user_default_bg.png',upload_to=user_directory_path_profile)
@@ -32,8 +56,11 @@ class User(AbstractUser):
         return self.products.all().count()
     
 class UserPayment(models.Model):
-    card=models.IntegerField(null=False)
-    expired=models.DateField(auto_now_add=False,null=False)
+    card=models.CharField(null=False,max_length=19)
+    dateMM=models.CharField(
+        max_length=2, choices=MM_OPTIONS, default='1')
+    dateAA=models.CharField(
+        max_length=4, choices=AA_OPTIONS, default='2021')
     csv_filename= models.IntegerField(null=False)
     owner_of_card=models.CharField(max_length=80,null=False)
     user=models.OneToOneField(User,on_delete=models.CASCADE,related_name="payment")
