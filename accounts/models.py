@@ -67,6 +67,11 @@ class UserPayment(models.Model):
     
     def __str__(self):
         return self.user.email
+    
+    @property
+    def get_card_view(self):
+        return self.card[15:19]
+        
 
 class UserLibraty(models.Model):
     user=models.OneToOneField(User,on_delete=models.CASCADE,related_name="library")

@@ -913,6 +913,30 @@ select {
   bottom: 5rem;
 }
 
+.top-8 {
+  top: 2rem;
+}
+
+.left-8 {
+  left: 2rem;
+}
+
+.left-16 {
+  left: 4rem;
+}
+
+.top-10 {
+  top: 2.5rem;
+}
+
+.top-6 {
+  top: 1.5rem;
+}
+
+.right-8 {
+  right: 2rem;
+}
+
 .z-10 {
   z-index: 10;
 }
@@ -1213,6 +1237,26 @@ select {
   height: 12rem;
 }
 
+.h-56 {
+  height: 14rem;
+}
+
+.h-7 {
+  height: 1.75rem;
+}
+
+.h-1 {
+  height: 0.25rem;
+}
+
+.h-2\.5 {
+  height: 0.625rem;
+}
+
+.h-2 {
+  height: 0.5rem;
+}
+
 .min-h-screen {
   min-height: 100vh;
 }
@@ -1317,6 +1361,16 @@ select {
   width: 1.75rem;
 }
 
+.w-max {
+  width: -webkit-max-content;
+  width: -moz-max-content;
+  width: max-content;
+}
+
+.w-96 {
+  width: 24rem;
+}
+
 .min-w-0 {
   min-width: 0px;
 }
@@ -1398,6 +1452,11 @@ select {
   transform: var(--tw-transform);
 }
 
+.translate-y-12 {
+  --tw-translate-y: 3rem;
+  transform: var(--tw-transform);
+}
+
 .scale-95 {
   --tw-scale-x: .95;
   --tw-scale-y: .95;
@@ -1422,6 +1481,13 @@ select {
 
 .cursor-pointer {
   cursor: pointer;
+}
+
+.select-none {
+  -webkit-user-select: none;
+     -moz-user-select: none;
+      -ms-user-select: none;
+          user-select: none;
 }
 
 .appearance-none {
@@ -1486,6 +1552,10 @@ select {
   justify-content: space-between;
 }
 
+.justify-items-center {
+  justify-items: center;
+}
+
 .gap-3 {
   gap: 0.75rem;
 }
@@ -1496,6 +1566,14 @@ select {
 
 .gap-2 {
   gap: 0.5rem;
+}
+
+.gap-6 {
+  gap: 1.5rem;
+}
+
+.gap-8 {
+  gap: 2rem;
 }
 
 .gap-x-8 {
@@ -1586,6 +1664,10 @@ select {
 
 .rounded-xl {
   border-radius: 0.75rem;
+}
+
+.rounded-2xl {
+  border-radius: 1rem;
 }
 
 .rounded-t-3xl {
@@ -1854,6 +1936,11 @@ select {
 .bg-yellow-300 {
   --tw-bg-opacity: 1;
   background-color: rgba(252, 211, 77, var(--tw-bg-opacity));
+}
+
+.bg-red-400 {
+  --tw-bg-opacity: 1;
+  background-color: rgba(248, 113, 113, var(--tw-bg-opacity));
 }
 
 .bg-opacity-75 {
@@ -2478,6 +2565,10 @@ select {
   overflow: auto;
 }
 
+.hover\:rounded-sm:hover {
+  border-radius: 0.125rem;
+}
+
 .hover\:bg-blue-700:hover {
   --tw-bg-opacity: 1;
   background-color: rgba(29, 78, 216, var(--tw-bg-opacity));
@@ -2553,6 +2644,11 @@ select {
   background-color: rgba(253, 230, 138, var(--tw-bg-opacity));
 }
 
+.hover\:bg-yellow-300:hover {
+  --tw-bg-opacity: 1;
+  background-color: rgba(252, 211, 77, var(--tw-bg-opacity));
+}
+
 .hover\:text-indigo-500:hover {
   --tw-text-opacity: 1;
   color: rgba(99, 102, 241, var(--tw-text-opacity));
@@ -2591,6 +2687,11 @@ select {
 .hover\:text-indigo-900:hover {
   --tw-text-opacity: 1;
   color: rgba(49, 46, 129, var(--tw-text-opacity));
+}
+
+.hover\:text-yellow-300:hover {
+  --tw-text-opacity: 1;
+  color: rgba(252, 211, 77, var(--tw-text-opacity));
 }
 
 .hover\:underline:hover {

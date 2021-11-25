@@ -1,6 +1,6 @@
 {% load static %}
 
-<div x-data="{ cartOpen: false , isOpen: false }" class="bg-white">
+<div x-data="{ cartOpen: false , isOpen: false }" class="bg-white ">
     {% block navbar %}
     {% include 'components/navbar.html' %}
     {% endblock navbar %}
@@ -101,7 +101,7 @@
                     </span>
                     <div class="flex w-full ml-2 items-center justify-between">
                         <p>
-                            Compados
+                            Comprados
                         </p>
                         <p>
                             {{user.get_produsts_count}}
@@ -126,24 +126,49 @@
                         </p>
                     </div>
                 </div>
-                <p class="text-gray-800 dark:text-white text-xl font-medium mt-6 mb-2">
-                        Metodo de pago
+            </div>
+            <div class="shadow-lg rounded-xl w-full md:w-80 p-4 bg-white dark:bg-gray-800 relative overflow-hidden">
+                <div class="w-full flex items-center justify-between mb-6">
+                    <p class="text-gray-800 dark:text-white text-xl font-medium">
+                        Metodo de pago 
                     </p>
-
-                <a href="{% url 'accounts:add-payment' %}"
+                    <button
+                        class="flex items-center hover:text-black dark:text-gray-50 dark:hover:text-white text-gray-800 border-0 focus:outline-none">
+                        <svg width="20" height="20" fill="currentColor" viewBox="0 0 1792 1792"
+                            xmlns="http://www.w3.org/2000/svg">
+                            <path
+                                d="M1600 736v192q0 40-28 68t-68 28h-416v416q0 40-28 68t-68 28h-192q-40 0-68-28t-28-68v-416h-416q-40 0-68-28t-28-68v-192q0-40 28-68t68-28h416v-416q0-40 28-68t68-28h192q40 0 68 28t28 68v416h416q40 0 68 28t28 68z">
+                            </path>
+                        </svg>
+                    </button>
+                </div>
+                {% if user.payment.get_card_view %}
+                <div class="flex items-center mb-2 rounded justify-between p-3 bg-green-100">
+                    <span class="rounded-lg p-2 bg-white">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" viewBox="0 0 24 24" style="fill: rgba(0, 0, 0, 1);transform: ;msFilter:;"><path d="M20 4H4c-1.103 0-2 .897-2 2v12c0 1.103.897 2 2 2h16c1.103 0 2-.897 2-2V6c0-1.103-.897-2-2-2zM4 6h16v2H4V6zm0 12v-6h16.001l.001 6H4z"></path><path d="M6 14h6v2H6z"></path></svg>
+                    </span>
+                    <div class="flex w-full ml-2 items-center justify-between">
+                        <p>
+                            **** **** **** 
+                            {{user.payment.get_card_view}}
+                        </p>
+                        <a href="{% url 'users:edit-payment' user.payment.pk %}" class="hover:bg-yellow-300 hover:rounded-sm">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" style="fill: rgba(0, 0, 0, 1);transform: ;msFilter:;"><path d="m7 17.013 4.413-.015 9.632-9.54c.378-.378.586-.88.586-1.414s-.208-1.036-.586-1.414l-1.586-1.586c-.756-.756-2.075-.752-2.825-.003L7 12.583v4.43zM18.045 4.458l1.589 1.583-1.597 1.582-1.586-1.585 1.594-1.58zM9 13.417l6.03-5.973 1.586 1.586-6.029 5.971L9 15.006v-1.589z"></path><path d="M5 21h14c1.103 0 2-.897 2-2v-8.668l-2 2V19H8.158c-.026 0-.053.01-.079.01-.033 0-.066-.009-.1-.01H5V5h6.847l2-2H5c-1.103 0-2 .897-2 2v14c0 1.103.897 2 2 2z"></path></svg>
+                        </a>
+                    </div>
+                </div>
+                {% else %}
+                <a href="{% url 'accounts:add-payment'  %}"
                     class="py-2 px-4 flex justify-center items-center  bg-green-500 hover:bg-green-700 focus:ring-green-500 focus:ring-offset-green-200 text-white w-full transition ease-in duration-200 text-center text-base font-semibold shadow-md focus:outline-none focus:ring-2 focus:ring-offset-2  rounded-lg">
                     <i class='bx bx-credit-card mx-1'></i>
                     <span>    Agregar Tarjeta</span>
-              
-                </a>
-                <div
-                    class="py-2 mt-40 px-4  bg-red-600 hover:bg-red-700 focus:ring-indigo-500 focus:ring-offset-indigo-200 text-white w-full transition ease-in duration-200 text-center text-base font-semibold shadow-md focus:outline-none focus:ring-2 focus:ring-offset-2  rounded-lg ">
-                    <a href="{% url 'account_logout' %}"> Cerrar Sesión</a>
-
-                </div>
-
-
+                </a>    
+                {% endif %}
             </div>
+            <div
+            class="py-2 mt-40 px-4  bg-red-600 hover:bg-red-700 focus:ring-indigo-500 focus:ring-offset-indigo-200 text-white w-full transition ease-in duration-200 text-center text-base font-semibold shadow-md focus:outline-none focus:ring-2 focus:ring-offset-2  rounded-lg ">
+            <a href="{% url 'account_logout' %}"> Cerrar Sesión</a>
 
+        </div>
         </div>
     </div>

@@ -36,21 +36,39 @@ class AddPaymentView(View):
         return render(request, 'pages/users/add_payment.html', context)
     
     def post(self,request, *args, **kwargs):
-        user=request.user.id 
-        payment=UserPayment.DoesNotExist()
         form=AddPaymentForm(request.POST)
-        
         if form.is_valid():
-            print("ecoooooooss")
-            
             new_comment=form.save(commit=False)
             new_comment.user=request.user
             new_comment.save() 
-            
-        else:
-            print(form.non_field_errors)
-        context={
-            'form':form,
-        }
         
-        return render(request,'pages/users/add_payment.html',context)
+        return redirect('home')
+
+@login_required
+def EditPayment(request, pk):
+    user = request.user.id
+    logged_in_user = request.user
+    payment = UserPayment.objects.get(pk=pk)
+
+    if request.method == 'POST':
+        form = AddPaymentForm(request.POST,  instance=payment)
+        if form.is_valid():
+            payment.card = form.cleaned_data.get('card')
+            payment.dateMM = form.cleaned_data.get('dateMM')
+            payment.dateAA = form.cleaned_data.get('dateAA')
+            payment.csv_filename = form.cleaned_data.get('csv_filename')
+            payment.owner_of_card = form.cleaned_data.get('owner_of_card')
+
+            payment.save()
+            return redirect('home')
+        else:
+            return redirect('home')
+    else:
+        payment = UserPayment.objects.get(pk=pk)
+        form = AddPaymentForm(instance=payment)
+
+    context = {
+        'form': form,
+        'payment': payment
+    }
+    return render(request, 'pages/users/edit-payment.html', context)

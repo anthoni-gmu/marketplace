@@ -5,9 +5,10 @@
     {% include 'components/sidebarcategory.html' %}
     {% endblock sidebarcategory %}
 {% block content %}
-{% block navbar %}
-{% include 'components/navbar.html' %}
-{% endblock navbar %}
+{% block profile %}
+{% include 'components/profile.html'%}
+{% endblock profile %}
+
 
 <div class="bg-white">
   <div >
@@ -19,11 +20,11 @@
 
 
     <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-      <div class="relative z-10 flex items-baseline justify-between pt-24 pb-6 border-b border-gray-200" x-data="{ category: false }">
+      <div class=" z-10 flex items-baseline justify-between pt-24 pb-6 border-b border-gray-200" x-data="{ category: false }">
         <h1 class="text-4xl font-extrabold tracking-tight text-gray-900">MarketBook</h1>
 
         <div class="flex items-center" >
-          <div class="relative inline-block text-left" >
+          <div class=" inline-block text-left" >
             <div>
               <button type="button" @click="category = true" class="group inline-flex justify-center text-sm font-medium text-gray-700 hover:text-gray-900" id="menu-button" aria-expanded="false" aria-haspopup="true">
                 Sort
