@@ -1,7 +1,7 @@
 from django.http.response import HttpResponse, JsonResponse
 from django.shortcuts import render, redirect, get_object_or_404
 from django.views import View
-from django.core.paginator import Paginator
+from django.core.paginator import Paginator,EmptyPage,PageNotAnInteger
 from django.views.generic.base import TemplateView
 from marketplace.models import Product, PurchasedProduct,Reviews
 from marketplace.forms import ProductModelForm
@@ -25,15 +25,21 @@ class HomeView(View):
     def get(self, request, *args, **kwargs):
         products = Product.objects.filter(active=True)
         form = ProductModelForm()
-        digital_products_data = None
-   
-        if products:
-            paginator = Paginator(products, 6)
-            page_number = request.GET.get('page')
-            digital_products_data = paginator.get_page(page_number)
+        
+        
+        page =request.GET.get('page',1)
+        paginator =Paginator(products,6)
 
+        try:
+            productsActivated=paginator.page(page)
+        except PageNotAnInteger:
+            productsActivated = paginator.page(1)
+        except EmptyPage:
+            productsActivated = paginator.page(paginator.num_pages)
+        
+        
         context = {
-            'products': digital_products_data,
+            'products': productsActivated,
             'form': form
         }
         return render(request, 'pages/index.html', context)
@@ -52,13 +58,16 @@ class HomeView(View):
                 description = form.cleaned_data.get('description')
                 thumbnail = form.cleaned_data.get('thumbnail')
                 slug = form.cleaned_data.get('slug')
-                content_url = form.cleaned_data.get('content_url')
                 content_file = form.cleaned_data.get('content_file')
                 price = form.cleaned_data.get('price')
                 active = form.cleaned_data.get('active')
-
+                category = form.cleaned_data.get('category')
                 p, created = Product.objects.get_or_create(user=form.user, name=name, description=description, thumbnail=thumbnail,
-                                                           slug=slug, content_url=content_url, content_file=content_file, price=price, active=active)
+                
+                                                           slug=slug, content_file=content_file, price=price, active=active)
+                for cat in category:
+                    p.category.add(cat)
+                p.category.all()
                 p.save()
                 return redirect('home')
 

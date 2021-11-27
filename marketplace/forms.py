@@ -1,5 +1,5 @@
 from django import forms
-from .models import Product
+from .models import Product,Categories
 
 class ProductModelForm(forms.ModelForm):
     name = forms.CharField(widget=forms.TextInput(attrs={'class':'max-w-lg block w-full shadow-sm dark:bg-dark-third dark:focus:ring-dark-second focus:ring-indigo-500 dark:focus:border-dark-second dark:text-dark-txt focus:border-indigo-500 sm:max-w-xs sm:text-sm dark:border-dark-second border-gray-300 rounded-md'}), required=True)
@@ -12,8 +12,8 @@ class ProductModelForm(forms.ModelForm):
                 }), 
             required=True
                 )
-    
-    content_url = forms.CharField(widget=forms.TextInput(attrs={'class': 'max-w-lg block w-full shadow-sm dark:bg-dark-third dark:focus:ring-dark-second focus:ring-indigo-500 dark:focus:border-dark-second dark:text-dark-txt focus:border-indigo-500 sm:max-w-xs sm:text-sm dark:border-dark-second border-gray-300 rounded-md'}), required=True)
+    category = forms.ModelMultipleChoiceField(
+        queryset=Categories.objects.all(), widget=forms.CheckboxSelectMultiple(), required=True)
 
     class Meta:
         model=Product
@@ -22,8 +22,8 @@ class ProductModelForm(forms.ModelForm):
             'description',
             'thumbnail',
             'slug',
-            'content_url',
             'content_file',
+            'category',
             'price',
             'active'
         )

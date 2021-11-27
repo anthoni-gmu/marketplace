@@ -29,7 +29,6 @@ class Product(models.Model):
     thumbnail = models.ImageField(
         blank=True, null=True, upload_to=marketplace_directory_path)
     slug = models.SlugField(unique=True)
-    content_url = models.URLField(blank=True, null=True)
     content_file = models.FileField(blank=True, null=True)
     ##content_file = models.FileField(blank=True, null=True, validators=[FileExtensionValidator(allowed_extensions=['mp3'])])
     active = models.BooleanField(default=False)
