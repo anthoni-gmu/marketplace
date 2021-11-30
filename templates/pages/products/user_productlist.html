@@ -1,12 +1,11 @@
 {% extends 'base.html' %}
 {% load static %}
 
-
 {% block content %}
 
-{% block navbar %}
-{% include 'components/navbar.html' %}
-{% endblock navbar %}
+{% block profile %}
+{% include 'components/profile.html'%}
+{% endblock profile %}
 {% comment %} <div class="flex flex-col">
   <div class="-my-2 overflow-x-auto sm:-mx-6 lg:-mx-8">
     <div class="py-2 align-middle inline-block min-w-full sm:px-6 lg:px-8">
@@ -82,7 +81,7 @@
 <div class="container mx-auto px-4 sm:px-8">
   <div class="py-8">
     <div>
-      <h2 class="text-2xl font-semibold leading-tight">Users</h2>
+      <h2 class="text-2xl font-semibold leading-tight">Libros</h2>
     </div>
     <div class="my-2 flex sm:flex-row flex-col">
       <div class="flex flex-row mb-1 sm:mb-0">
@@ -193,19 +192,38 @@
             
           </tbody>
         </table>
-        <div class="px-5 py-5 bg-white border-t flex flex-col xs:flex-row items-center xs:justify-between          ">
-          <span class="text-xs xs:text-sm text-gray-900">
-            Showing 1 to 4 of 50 Entries
-          </span>
-          <div class="inline-flex mt-2 xs:mt-0">
-            <button class="text-sm bg-gray-300 hover:bg-gray-400 text-gray-800 font-semibold py-2 px-4 rounded-l">
-              Prev
-            </button>
-            <button class="text-sm bg-gray-300 hover:bg-gray-400 text-gray-800 font-semibold py-2 px-4 rounded-r">
-              Next
-            </button>
+        <div class="bg-white px-4 py-3 flex items-center justify-between border-t border-gray-200 sm:px-6">
+          <div class="flex-1 flex justify-between ">
+            {% if products.has_previous %}
+            <a href="?page={{products.previous_page_number}}" class="focus-visible:outline-none"> <span
+                class="relative inline-flex items-center px-4 py-2 border border-gray-300 text-sm font-medium rounded-md text-gray-700 bg-white hover:bg-gray-50">
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
+                  style="fill: rgba(0, 0, 0, 1);transform: ;msFilter:;">
+                  <path d="m5 12 7 6v-5h6v-2h-6V6z"></path>
+                </svg>Página anterior</span></a>
+  
+            {% endif %}
+            <div class=" hidden flex-col md:block">
+              <div class="justify-center text-center flex items-center  rounded-full text-white bg-pink-400">
+                <span class="p-1">
+                  {{products.number}}
+                </span>
+              </div>
+              <span class="p-1 text-center">
+                Página actual
+              </span>
+            </div>
+            {% if products.has_next %}
+            <a href="?page={{products.next_page_number}}" class="focus-visible:outline-none"><span
+                class="ml-3 relative inline-flex items-center px-4 py-2 border border-gray-300 text-sm font-medium rounded-md text-gray-700 bg-white hover:bg-gray-50">Siguiente
+                página<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
+                  style="fill: rgba(0, 0, 0, 1);transform: ;msFilter:;">
+                  <path d="m19 12-7-6v5H6v2h6v5z"></path>
+                </svg></span></a>
+            {% endif %}
           </div>
         </div>
+        
       </div>
     </div>
   </div>

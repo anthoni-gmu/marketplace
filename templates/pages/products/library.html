@@ -8,10 +8,41 @@
 {% endblock profile %}
 
 
-        <!-- Aqui ira la app de libreria  -->
- 
+<section class="text-gray-600 body-font">
+        <div class="container px-5 py-24 mx-auto">
+                <div class="flex flex-col text-center w-full mb-20">
+                        <h1 class="text-2xl font-medium title-font mb-4 text-gray-900 tracking-widest">LIBROS ADQUIRIDOS
+                        </h1>
+                        <p class="lg:w-2/3 mx-auto leading-relaxed text-base">Puedes acceder al contenido las veces que
+                                quieras!</p>
+                </div>
+                <div class="flex flex-wrap -m-4">
+                        {% for book in userlibrary.products.all %}
+                        <div class="p-4 lg:w-1/2">
+                                <div class="h-full flex sm:flex-row flex-col items-center sm:justify-start justify-center text-center sm:text-left">
+                                        <a href="{% url 'product-detail' book.slug %}"
+                                                class="flex-shrink-0 rounded-lg  sm:mb-0 mb-4">
+                                                <img alt="team" class="object-center object-cover w-40 h-48  "
+                                                        src="{{book.thumbnail.url}}">
+                                        </a>
+
+                                        <div class="flex-grow sm:pl-8">
+                                                <a href="{% url 'product-detail' book.slug %}"
+                                                        class="title-font font-medium text-lg text-gray-900">{{book.name}}</a>
+                                                {% for cat in book.category.all %}
+                                                <h3 class="text-gray-500 mb-3">{{cat}}</h3>
+                                                {% endfor %}
+                                                <p class="mb-4">{{book.description|truncatechars:150}}</p>
+
+                                        </div>
+                                </div>
+                        </div>
+                        {% endfor %}
 
 
+                </div>
+        </div>
+</section>
 
 {% endblock content %}
 

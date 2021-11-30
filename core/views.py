@@ -25,8 +25,6 @@ class HomeView(View):
     def get(self, request, *args, **kwargs):
         products = Product.objects.filter(active=True)
         form = ProductModelForm()
-        
-        
         page =request.GET.get('page',1)
         paginator =Paginator(products,6)
 
@@ -88,10 +86,18 @@ class UserProductList(View):
     def get(self, request, *args, **kwargs):
         products = Product.objects.filter(user=request.user)
         
-        
+        page =request.GET.get('page',1)
+        paginator =Paginator(products,6)
 
+        try:
+            productsActivated=paginator.page(page)
+        except PageNotAnInteger:
+            productsActivated = paginator.page(1)
+        except EmptyPage:
+            productsActivated = paginator.page(paginator.num_pages)
+        
         context = {
-            'products': products
+            'products': productsActivated
         }
         return render(request, 'pages/products/user_productlist.html', context)
 

@@ -17,59 +17,26 @@
         </button>
     </div>
     <nav :class="{'block': open, 'hidden': !open}" class="flex-grow px-4 pb-4 md:pb-0 md:overflow-y-auto">
-
-
         <form action="#" method="GET"
-            class="block px-4 py-2 mt-2 text-sm font-bold text-gray-900 bg-gray-400 rounded-lg  hover:text-gray-900 focus:text-gray-900 focus:bg-gray-200 focus:outline-none focus:shadow-outline">
-            <input type="hidden" name="query" value="TODAS" placeholder="Buscar por categoria">
-            <button type="submit" class="w-full">
-                <span class="float-left ">TODAS</span>
-                <span class="text-gray-900 float-right">{{post.count}}</span>
-            </button>
+        class="block px-4 py-2 mt-2 text-sm font-bold text-gray-900 bg-gray-400 rounded-lg  hover:text-gray-900 focus:text-gray-900 focus:bg-gray-200 focus:outline-none focus:shadow-outline">
+        <input type="hidden" name="query" value="TODAS" placeholder="Buscar por categoria">
+        <button type="submit" class="w-full">
+            <span class="float-left ">TODAS</span>
+            <span class="text-gray-900 float-right">{{post.count}}</span>
+        </button>
         </form>
-          <form action="#" method="GET"
-            class="block px-4 py-2 mt-2 text-sm font-bold text-gray-900 bg-gray-400 rounded-lg  hover:text-gray-900 focus:text-gray-900 focus:bg-gray-200 focus:outline-none focus:shadow-outline">
-            <input type="hidden" name="query" value="TODAS" placeholder="Buscar por categoria">
-            <button type="submit" class="w-full">
-                <span class="float-left ">TODAS</span>
-                <span class="text-gray-900 float-right">{{post.count}}</span>
-            </button>
-        </form>
-          <form action="#" method="GET"
-            class="block px-4 py-2 mt-2 text-sm font-bold text-gray-900 bg-gray-400 rounded-lg  hover:text-gray-900 focus:text-gray-900 focus:bg-gray-200 focus:outline-none focus:shadow-outline">
-            <input type="hidden" name="query" value="TODAS" placeholder="Buscar por categoria">
-            <button type="submit" class="w-full">
-                <span class="float-left ">TODAS</span>
-                <span class="text-gray-900 float-right">{{post.count}}</span>
-            </button>
-        </form>  <form action="#" method="GET"
-            class="block px-4 py-2 mt-2 text-sm font-bold text-gray-900 bg-gray-400 rounded-lg  hover:text-gray-900 focus:text-gray-900 focus:bg-gray-200 focus:outline-none focus:shadow-outline">
-            <input type="hidden" name="query" value="TODAS" placeholder="Buscar por categoria">
-            <button type="submit" class="w-full">
-                <span class="float-left ">TODAS</span>
-                <span class="text-gray-900 float-right">{{post.count}}</span>
-            </button>
-        </form>
-        
-
-        <form action="#" method="GET"
-            class="block px-4 py-2 mt-2 text-sm font-bold text-gray-900 bg-green-300 rounded-lg  hover:text-gray-900 focus:text-gray-900 focus:bg-gray-200 focus:outline-none focus:shadow-outline">
-            <input type="hidden" name="query" value="{{cate}}" placeholder="Buscar por categoria">
-            <button type="submit" class="w-full">
-                <span class="float-left ">{{cate}}</span>
-                <span class="text-gray-900 float-right"> {{count.label__count}}</span>
-            </button>
-        </form>
-        <form action="#" method="GET"
-            class="block px-4 py-2 mt-2 text-sm font-semibold text-gray-900 bg-gray-200 rounded-lg  hover:bg-green-300 ">
-            <input type="hidden" name="query" value="{{cate}}" placeholder="Buscar por categoria">
-            <button type="submit" class="w-full">
-                <span class="float-left ">{{cate}}</span>
-                <span class="text-gray-900 float-right"> {{count.label__count}}</span>
-            </button>
-        </form>
-
-
+{% for cat in categories %}
+<form action="#" method="GET"
+class="block px-4 py-2 mt-2 text-sm font-bold text-gray-900 bg-gray-400 rounded-lg  hover:text-gray-900 focus:text-gray-900 focus:bg-gray-200 focus:outline-none focus:shadow-outline">
+<input type="hidden" name="query" value="TODAS" placeholder="Buscar por categoria">
+<button type="submit" class="w-full">
+    <span class="float-left ">{{cat}}</span>
+    <span class="text-gray-900 float-right">{{post.count}}</span>
+</button>
+</form>
+{% endfor %}
+       
+          
 
 
     </nav>

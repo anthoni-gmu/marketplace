@@ -62,8 +62,13 @@
     <nav :class="isOpen ? '' : 'hidden'" class="sm:flex sm:justify-center sm:items-center mt-4">
       <div class="flex flex-col sm:flex-row">
         <a class="mt-3 text-gray-600 hover:underline sm:mx-3 sm:mt-0" href=" {% url 'home' %}">Mercado</a>
-        <a class="mt-3 text-gray-600 hover:underline sm:mx-3 sm:mt-0"
-          href="{% url 'marketplace:category' %} ">Categorias</a>
+          <form action="{% url 'marketplace:category' %}" method="GET"
+            class=" font-semibold tracking-widest text-gray-900 uppercase rounded-lg dark-mode:text-white focus:outline-none focus:shadow-outline">
+            <input type="hidden" name="query" value="TODAS" placeholder="Buscar por categoria">
+            <button type="submit" class="">
+                <span class="mt-3 text-gray-600 hover:underline sm:mx-3 sm:mt-0">Categorias</span>
+            </button>
+        </form>
         <a class="mt-3 text-gray-600 hover:underline sm:mx-3 sm:mt-0" href="#">Informacion</a>
       </div>
       {% if not user.is_authenticated %}
