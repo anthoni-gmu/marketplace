@@ -10,7 +10,7 @@ class CategoryView(View):
         if query=="TODAS":
             category_list = Product.objects.filter(active=True)
         else:
-            category_list = Product.objects.filter(Q(category__name=query))
+            category_list = Product.objects.filter(Q(category__name=query,active=True))
         page =request.GET.get('page',1)
         paginator =Paginator(category_list,6)
         try:

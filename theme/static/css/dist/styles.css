@@ -2523,6 +2523,11 @@ select {
   color: rgba(49, 46, 129, var(--tw-text-opacity));
 }
 
+.hover\:text-yellow-600:hover {
+  --tw-text-opacity: 1;
+  color: rgba(217, 119, 6, var(--tw-text-opacity));
+}
+
 .hover\:underline:hover {
   text-decoration: underline;
 }
